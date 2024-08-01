@@ -43,10 +43,10 @@ namespace ChatRoomsWeb.Controllers
 
         [HttpPost]
         [Route("JoinChatRoom")]
-        public async Task<Chat> JoinChatRoom(string chatRoomId, string userId)
+        public async Task<bool> JoinChatRoom(string chatRoomId, string userId, string connectionId)
         {
             IChatService chatService = GetChatService();
-            return await chatService.JoinChatRoom(chatRoomId, userId);
+            return await chatService.JoinChatRoom(chatRoomId, userId, connectionId);
         }
 
         [HttpPost]

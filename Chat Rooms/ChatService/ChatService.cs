@@ -6,6 +6,8 @@ using Interfaces.Helpers;
 using Microsoft.ServiceFabric.Data.Collections;
 using System.Fabric;
 using Microsoft.ServiceFabric.Services.Remoting.Runtime;
+using Microsoft.ServiceFabric.Services.Remoting.Client;
+using Microsoft.ServiceFabric.Services.Remoting.V2.FabricTransport.Client;
 
 namespace ChatService
 {
@@ -14,9 +16,15 @@ namespace ChatService
     /// </summary>
     internal sealed class ChatService : StatefulService, IChatService
     {
+        private ServiceProxyFactory _proxyFactory;
+        private Uri _chatBroadcastServiceUri;
+
         public ChatService(StatefulServiceContext context)
             : base(context)
-        { }
+        {
+            _proxyFactory = new ServiceProxyFactory(c => { return new FabricTransportServiceRemotingClientFactory(); });
+            _chatBroadcastServiceUri = new Uri("fabric:/Chat_Rooms/ChatBroadcastService");
+        }
 
         public async Task<Dictionary<string, ChatData>> GetChatRooms()
         {
@@ -79,19 +87,74 @@ namespace ChatService
             return result;
         }
 
-        public Task<Chat> JoinChatRoom(string chatRoomId, string userId)
+        public async Task<bool> JoinChatRoom(string chatRoomId, string userId, string connectionId)
         {
-            throw new NotImplementedException();
+            IReliableDictionary<string, Chat> _chatRooms = await StateManager.GetOrAddAsync<IReliableDictionary<string, Chat>>("chatRooms");
+
+            using (ITransaction tx = StateManager.CreateTransaction())
+            {
+                IChatBroadcastService chatBroadcastService = GetChatBroadcastService();
+                ConditionalValue<Chat> chat = await _chatRooms.TryGetValueAsync(tx, chatRoomId);
+                if (chat.HasValue)
+                {
+                    chat.Value.AddChatter(userId, connectionId);
+                    await chatBroadcastService.JoinChatRoom(connectionId, chatRoomId);
+                    await tx.CommitAsync();
+                }
+                else
+                {
+                    await tx.CommitAsync();
+                    return false;
+                }
+            }
+
+            return true;
         }
 
-        public Task<bool> LeaveChatRoom(string chatRoomId, string userId)
+        public async Task<bool> LeaveChatRoom(string chatRoomId, string userId)
         {
-            throw new NotImplementedException();
+            IReliableDictionary<string, Chat> _chatRooms = await StateManager.GetOrAddAsync<IReliableDictionary<string, Chat>>("chatRooms");
+
+            using (ITransaction tx = StateManager.CreateTransaction())
+            {
+                IChatBroadcastService chatBroadcastService = GetChatBroadcastService();
+                ConditionalValue<Chat> chat = await _chatRooms.TryGetValueAsync(tx, chatRoomId);
+                if (chat.HasValue)
+                {
+                    chat.Value.RemoveChatter(userId);
+                    await chatBroadcastService.LeaveChatRoom(userId, chatRoomId);
+                    await tx.CommitAsync();
+                }
+                else
+                {
+                    await tx.CommitAsync();
+                    return false;
+                }
+            }
+            return true;
         }
 
-        public Task<bool> SendMessage(string chatRoomId, string userId, Message message)
+        public async Task<bool> SendMessage(string chatRoomId, string userId, Message message)
         {
-            throw new NotImplementedException();
+            IReliableDictionary<string, Chat> _chatRooms = await StateManager.GetOrAddAsync<IReliableDictionary<string, Chat>>("chatRooms");
+
+            using (ITransaction tx = StateManager.CreateTransaction())
+            {
+                IChatBroadcastService chatBroadcastService = GetChatBroadcastService();
+                ConditionalValue<Chat> chat = await _chatRooms.TryGetValueAsync(tx, chatRoomId);
+                if (chat.HasValue)
+                {
+                    chat.Value.AddMessage(message);
+                    await chatBroadcastService.SendMessage(chatRoomId, message);
+                    await tx.CommitAsync();
+                }
+                else
+                {
+                    await tx.CommitAsync();
+                    return false;
+                }
+            }
+            return true;
         }
 
         public async Task<bool> DeleteChatRoom(string chatId)
@@ -113,6 +176,12 @@ namespace ChatService
                     return false;
                 }
             }
+        }
+
+        private IChatBroadcastService GetChatBroadcastService()
+        {
+            return _proxyFactory.CreateServiceProxy<IChatBroadcastService>(_chatBroadcastServiceUri);
+            return ServiceProxy.Create<IChatBroadcastService>(_chatBroadcastServiceUri);
         }
 
         /// <summary>
