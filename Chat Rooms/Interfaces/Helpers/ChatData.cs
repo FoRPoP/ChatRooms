@@ -7,7 +7,7 @@
         public string Description { get; set; }
         public string OwnerId { get; set; }
         public DateTime DateTimeCreated { get; set; }
-        public List<string> ActiveChattersIds { get; set; }
+        public Dictionary<string, string> ActiveChatters { get; set; }
 
         public ChatData()
         {
@@ -16,7 +16,7 @@
             Description = string.Empty;
             OwnerId = string.Empty;
             DateTimeCreated = DateTime.Now;
-            ActiveChattersIds = [];
+            ActiveChatters = new();
         }
 
         public ChatData(string chatId, string name, string description, string ownerId)
@@ -26,7 +26,7 @@
             Description = description;
             OwnerId = ownerId;
             DateTimeCreated = DateTime.Now;
-            ActiveChattersIds = [];
+            ActiveChatters = new();
         }
     }
 }

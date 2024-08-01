@@ -11,7 +11,7 @@ namespace Interfaces
 
         Task<bool> CreateChatRoom(string name, string description);
 
-        Task<Chat> JoinChatRoom(string chatRoomId, string userId);
+        Task<bool> JoinChatRoom(string chatRoomId, string userId, string connectionId);
 
         Task<bool> SendMessage(string chatRoomId, string userId, Message message);
 
