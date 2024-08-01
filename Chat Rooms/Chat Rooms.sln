@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatRoomsWeb", "ChatRoomsWe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interfaces", "Interfaces\Interfaces.csproj", "{4C43D01C-F7CB-461D-BF9E-93C6E786D757}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatService", "ChatService\ChatService.csproj", "{9A61738A-35D4-40B3-AAC2-8B226234B6EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatService", "ChatService\ChatService.csproj", "{9A61738A-35D4-40B3-AAC2-8B226234B6EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatBroadcastService", "ChatBroadcastService\ChatBroadcastService.csproj", "{5FA02317-E9FE-4121-BCE6-AFF9EAE6B320}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,14 @@ Global
 		{9A61738A-35D4-40B3-AAC2-8B226234B6EC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9A61738A-35D4-40B3-AAC2-8B226234B6EC}.Release|x64.ActiveCfg = Release|Any CPU
 		{9A61738A-35D4-40B3-AAC2-8B226234B6EC}.Release|x64.Build.0 = Release|Any CPU
+		{5FA02317-E9FE-4121-BCE6-AFF9EAE6B320}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FA02317-E9FE-4121-BCE6-AFF9EAE6B320}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FA02317-E9FE-4121-BCE6-AFF9EAE6B320}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5FA02317-E9FE-4121-BCE6-AFF9EAE6B320}.Debug|x64.Build.0 = Debug|Any CPU
+		{5FA02317-E9FE-4121-BCE6-AFF9EAE6B320}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FA02317-E9FE-4121-BCE6-AFF9EAE6B320}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FA02317-E9FE-4121-BCE6-AFF9EAE6B320}.Release|x64.ActiveCfg = Release|Any CPU
+		{5FA02317-E9FE-4121-BCE6-AFF9EAE6B320}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
