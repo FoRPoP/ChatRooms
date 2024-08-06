@@ -9,13 +9,13 @@ namespace Interfaces
 
         Task<ChatData?> GetChatRoom(string chatRoomId);
 
-        Task<bool> CreateChatRoom(string name, string description);
+        Task<bool> CreateChatRoom(string username, string name, string description);
 
-        Task<Chat?> JoinChatRoom(string chatRoomId, string userId, string connectionId);
+        Task<Chat?> JoinChatRoom(string chatRoomId, string username, string connectionId);
 
-        Task<bool> SendMessage(string chatRoomId, string userId, Message message);
+        Task<bool> SendMessage(string chatRoomId, Message message);
 
-        Task<bool> LeaveChatRoom(string chatRoomId, string userId, string connectionId);
+        Task<bool> LeaveChatRoom(string chatRoomId, string username, string connectionId);
 
         Task<bool> DeleteChatRoom(string chatId);
     }

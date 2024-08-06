@@ -35,34 +35,34 @@ namespace ChatRoomsWeb.Controllers
 
         [HttpPost]
         [Route("CreateChatRoom")]
-        public async Task<bool> CreateChatRoom(string name, string description)
+        public async Task<bool> CreateChatRoom(string username, string name, string description)
         {
             IChatService chatService = GetChatService();
-            return await chatService.CreateChatRoom(name, description);
+            return await chatService.CreateChatRoom(username, name, description);
         }
 
         [HttpPost]
         [Route("JoinChatRoom")]
-        public async Task<Chat?> JoinChatRoom(string chatRoomId, string userId, string connectionId)
+        public async Task<Chat?> JoinChatRoom(string chatRoomId, string username, string connectionId)
         {
             IChatService chatService = GetChatService();
-            return await chatService.JoinChatRoom(chatRoomId, userId, connectionId);
+            return await chatService.JoinChatRoom(chatRoomId, username, connectionId);
         }
 
         [HttpPost]
         [Route("SendMessage")]
-        public async Task<bool> SendMessage(string chatRoomId, string userId, Message message)
+        public async Task<bool> SendMessage(string chatRoomId, Message message)
         {
             IChatService chatService = GetChatService();
-            return await chatService.SendMessage(chatRoomId, userId, message);
+            return await chatService.SendMessage(chatRoomId, message);
         }
 
         [HttpPost]
         [Route("LeaveChatRoom")]
-        public async Task<bool> LeaveChatRoom(string chatRoomId, string userId, string connectionId)
+        public async Task<bool> LeaveChatRoom(string chatRoomId, string username, string connectionId)
         {
             IChatService chatService = GetChatService();
-            return await chatService.LeaveChatRoom(chatRoomId, userId, connectionId);
+            return await chatService.LeaveChatRoom(chatRoomId, username, connectionId);
         }
 
         [HttpDelete]
