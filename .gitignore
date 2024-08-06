@@ -396,3 +396,31 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Typescript
+chat_rooms_client/wwwroot/*.js
+chat_rooms_client/node_modules
+chat_rooms_client/typings
+chat_rooms_client/dist
+
+# dependencies
+chat_rooms_client/node_modules
+chat_rooms_client/.pnp
+chat_rooms_client/.pnp.js
+
+# testing
+chat_rooms_client/coverage
+
+# production
+chat_rooms_client/build
+
+# misc
+chat_rooms_client/.DS_Store
+chat_rooms_client/.env.local
+chat_rooms_client/.env.development.local
+chat_rooms_client/.env.test.local
+chat_rooms_client/.env.production.local
+
+chat_rooms_client/npm-debug.log*
+chat_rooms_client/yarn-debug.log*
+chat_rooms_client/yarn-error.log*
