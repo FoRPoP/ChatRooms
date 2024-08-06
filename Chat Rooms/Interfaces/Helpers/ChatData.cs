@@ -5,26 +5,26 @@
         public string ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string OwnerId { get; set; }
+        public string OwnerUsername { get; set; }
         public DateTime DateTimeCreated { get; set; }
-        public Dictionary<string, string> ActiveChatters { get; set; }
+        public List<string> ActiveChatters { get; set; }
 
         public ChatData()
         {
             ID = string.Empty;
             Name = string.Empty;
             Description = string.Empty;
-            OwnerId = string.Empty;
+            OwnerUsername = string.Empty;
             DateTimeCreated = DateTime.Now;
             ActiveChatters = new();
         }
 
-        public ChatData(string chatId, string name, string description, string ownerId)
+        public ChatData(string chatId, string name, string description, string ownerUsername)
         {
             ID = chatId;
             Name = name;
             Description = description;
-            OwnerId = ownerId;
+            OwnerUsername = ownerUsername;
             DateTimeCreated = DateTime.Now;
             ActiveChatters = new();
         }

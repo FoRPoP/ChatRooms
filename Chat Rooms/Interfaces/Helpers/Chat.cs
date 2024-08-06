@@ -17,9 +17,9 @@
             Messages = [];
         }
 
-        public void AddChatter(string userId, string connectionId)
+        public void AddChatter(string userId)
         {
-            ChatData.ActiveChatters.Add(userId, connectionId);
+            ChatData.ActiveChatters.Add(userId);
         }
 
         public void RemoveChatter(string userId)

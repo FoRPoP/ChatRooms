@@ -4,7 +4,7 @@
     {
         public string ID { get; set; }
         public string ChatRoomId { get; set; }
-        public string UserId { get; set; }
+        public string Username { get; set; }
         public DateTime DateTimeSent { get; set; }
         public string Text { get; set; }
 
@@ -12,16 +12,16 @@
         {
             ID = string.Empty;
             ChatRoomId = string.Empty;
-            UserId = string.Empty;
+            Username = string.Empty;
             DateTimeSent = DateTime.Now;
             Text = string.Empty;
         }
 
-        public Message(string messageId, string chatRoomId, string userId, string text)
+        public Message(string messageId, string chatRoomId, string username, string text)
         {
             ID = messageId;
             ChatRoomId = chatRoomId;
-            UserId = userId;
+            Username = username;
             DateTimeSent = DateTime.Now;
             Text = text;
         }
