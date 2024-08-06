@@ -11,11 +11,11 @@ namespace Interfaces
 
         Task<bool> CreateChatRoom(string name, string description);
 
-        Task<bool> JoinChatRoom(string chatRoomId, string userId, string connectionId);
+        Task<Chat?> JoinChatRoom(string chatRoomId, string userId, string connectionId);
 
         Task<bool> SendMessage(string chatRoomId, string userId, Message message);
 
-        Task<bool> LeaveChatRoom(string chatRoomId, string userId);
+        Task<bool> LeaveChatRoom(string chatRoomId, string userId, string connectionId);
 
         Task<bool> DeleteChatRoom(string chatId);
     }

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+using System.Text;
 
 namespace ChatBroadcastService
 {
@@ -15,8 +16,14 @@ namespace ChatBroadcastService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
             services.AddSignalR();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "CorsPolicy", policy =>
+                {
+                    policy.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,8 +41,7 @@ namespace ChatBroadcastService
 
             app.UseRouting();
 
-
-            app.UseCors();
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {

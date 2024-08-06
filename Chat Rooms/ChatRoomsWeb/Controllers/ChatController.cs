@@ -43,7 +43,7 @@ namespace ChatRoomsWeb.Controllers
 
         [HttpPost]
         [Route("JoinChatRoom")]
-        public async Task<bool> JoinChatRoom(string chatRoomId, string userId, string connectionId)
+        public async Task<Chat?> JoinChatRoom(string chatRoomId, string userId, string connectionId)
         {
             IChatService chatService = GetChatService();
             return await chatService.JoinChatRoom(chatRoomId, userId, connectionId);
@@ -59,10 +59,10 @@ namespace ChatRoomsWeb.Controllers
 
         [HttpPost]
         [Route("LeaveChatRoom")]
-        public async Task<bool> LeaveChatRoom(string chatRoomId, string userId)
+        public async Task<bool> LeaveChatRoom(string chatRoomId, string userId, string connectionId)
         {
             IChatService chatService = GetChatService();
-            return await chatService.LeaveChatRoom(chatRoomId, userId);
+            return await chatService.LeaveChatRoom(chatRoomId, userId, connectionId);
         }
 
         [HttpDelete]

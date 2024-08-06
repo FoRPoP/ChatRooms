@@ -87,14 +87,15 @@ namespace ChatService
             return result;
         }
 
-        public async Task<bool> JoinChatRoom(string chatRoomId, string userId, string connectionId)
+        public async Task<Chat?> JoinChatRoom(string chatRoomId, string userId, string connectionId)
         {
             IReliableDictionary<string, Chat> _chatRooms = await StateManager.GetOrAddAsync<IReliableDictionary<string, Chat>>("chatRooms");
+            ConditionalValue<Chat> chat;
 
             using (ITransaction tx = StateManager.CreateTransaction())
             {
                 IChatBroadcastService chatBroadcastService = GetChatBroadcastService();
-                ConditionalValue<Chat> chat = await _chatRooms.TryGetValueAsync(tx, chatRoomId);
+                chat = await _chatRooms.TryGetValueAsync(tx, chatRoomId);
                 if (chat.HasValue)
                 {
                     chat.Value.AddChatter(userId, connectionId);
@@ -104,14 +105,14 @@ namespace ChatService
                 else
                 {
                     await tx.CommitAsync();
-                    return false;
+                    return null;
                 }
             }
 
-            return true;
+            return chat.Value;
         }
 
-        public async Task<bool> LeaveChatRoom(string chatRoomId, string userId)
+        public async Task<bool> LeaveChatRoom(string chatRoomId, string userId, string connectionId)
         {
             IReliableDictionary<string, Chat> _chatRooms = await StateManager.GetOrAddAsync<IReliableDictionary<string, Chat>>("chatRooms");
 
@@ -122,7 +123,7 @@ namespace ChatService
                 if (chat.HasValue)
                 {
                     chat.Value.RemoveChatter(userId);
-                    await chatBroadcastService.LeaveChatRoom(userId, chatRoomId);
+                    await chatBroadcastService.LeaveChatRoom(connectionId, chatRoomId);
                     await tx.CommitAsync();
                 }
                 else

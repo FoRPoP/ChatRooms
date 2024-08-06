@@ -47,6 +47,7 @@ namespace ChatRoomsWeb
                         builder.Services.AddControllers();
                         builder.Services.AddEndpointsApiExplorer();
                         builder.Services.AddSwaggerGen();
+
                         var app = builder.Build();
                         if (app.Environment.IsDevelopment())
                         {
@@ -55,7 +56,8 @@ namespace ChatRoomsWeb
                         }
                         app.UseAuthorization();
                         app.MapControllers();
-                        
+                        app.UseCors(builder => builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+
                         return app;
 
                     }))
