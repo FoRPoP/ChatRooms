@@ -11,6 +11,10 @@ using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using Microsoft.ServiceFabric.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.OpenApi.Models;
 
 namespace ChatRoomsWeb
 {
@@ -19,9 +23,13 @@ namespace ChatRoomsWeb
     /// </summary>
     internal sealed class ChatRoomsWeb : StatelessService
     {
-        public ChatRoomsWeb(StatelessServiceContext context)
+        private IConfiguration _configuration;
+
+        public ChatRoomsWeb(StatelessServiceContext context, IConfiguration configuration)
             : base(context)
-        { }
+        {
+            _configuration = configuration;
+        }
 
         /// <summary>
         /// Optional override to create listeners (like tcp, http) for this service instance.
@@ -44,9 +52,55 @@ namespace ChatRoomsWeb
                                     .UseContentRoot(Directory.GetCurrentDirectory())
                                     .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
                                     .UseUrls(url);
+
+                        builder.Services.AddAuthentication(options =>
+                        {
+                            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                        })
+                        .AddJwtBearer(options =>
+                        {
+                            options.TokenValidationParameters = new TokenValidationParameters()
+                            {
+                                ValidateIssuer = true,
+                                ValidateAudience = true,
+                                ValidateLifetime = true,
+                                ValidateIssuerSigningKey = true,
+                                ValidIssuer = _configuration["Jwt:Issuer"],
+                                ValidAudience = _configuration["Jwt:Audience"],
+                                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]))
+                            };
+                        });
+
+                        builder.Services.AddAuthorization();
                         builder.Services.AddControllers();
                         builder.Services.AddEndpointsApiExplorer();
-                        builder.Services.AddSwaggerGen();
+
+                        builder.Services.AddSwaggerGen(c =>
+                        {
+                            c.SwaggerDoc("v1", new OpenApiInfo { Title = "ChatRoomsWeb", Version = "v1" });
+                            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                            {
+                                Name = "Authorization",
+                                Scheme = "Bearer",
+                                BearerFormat = "JWT",
+                                In = ParameterLocation.Header,
+                                Description = "\"JWT Authorization header using the Bearer scheme. \\r\\n\\r\\n Enter 'Bearer' [space] and then your token in the text input below.\\r\\n\\r\\nExample: \\\"Bearer 1safsfsdfdfd\\\"\""
+                            });
+                            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                            {
+                                {
+                                    new OpenApiSecurityScheme
+                                    {
+                                        Reference = new OpenApiReference
+                                        {
+                                            Type = ReferenceType.SecurityScheme,
+                                            Id = "Bearer"
+                                        }
+                                    }, new string[] { }
+                                }
+                            });
+                        });
 
                         var app = builder.Build();
                         if (app.Environment.IsDevelopment())
@@ -54,6 +108,8 @@ namespace ChatRoomsWeb
                         app.UseSwagger();
                         app.UseSwaggerUI();
                         }
+
+                        app.UseAuthentication();
                         app.UseAuthorization();
                         app.MapControllers();
                         app.UseCors(builder => builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
