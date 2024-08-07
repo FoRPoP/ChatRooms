@@ -3,10 +3,11 @@ using Microsoft.ServiceFabric.Services.Remoting.Client;
 using Interfaces;
 using Interfaces.Helpers;
 using Microsoft.ServiceFabric.Services.Client;
-using Microsoft.ServiceFabric.Services.Remoting.V2.FabricTransport.Client;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ChatRoomsWeb.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ChatController : Controller
