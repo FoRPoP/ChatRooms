@@ -12,30 +12,30 @@
  * Do not edit the class manually.
  */
 
-import { UserInfo } from './user-info';
+import { Message } from './message';
  /**
  * 
  *
  * @export
- * @interface User
+ * @interface UserInfo
  */
-export interface User {
+export interface UserInfo {
 
     /**
-     * @type {string}
-     * @memberof User
+     * @type {Array<Message>}
+     * @memberof UserInfo
      */
-    username?: string | null;
+    messagesSent?: Array<Message> | null;
 
     /**
-     * @type {string}
-     * @memberof User
+     * @type {Array<string>}
+     * @memberof UserInfo
      */
-    hashedPassword?: string | null;
+    favouritedChatsIds?: Array<string> | null;
 
     /**
-     * @type {UserInfo}
-     * @memberof User
+     * @type {Array<string>}
+     * @memberof UserInfo
      */
-    userInfo?: UserInfo;
+    createdChatsIds?: Array<string> | null;
 }

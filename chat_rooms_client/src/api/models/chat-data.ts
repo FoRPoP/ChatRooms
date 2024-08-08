@@ -55,4 +55,10 @@ export interface ChatData {
      * @memberof ChatData
      */
     activeChatters?: Array<string> | null;
+
+    /**
+     * @type {number}
+     * @memberof ChatData
+     */
+    totalMessages?: number;
 }
