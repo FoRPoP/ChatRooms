@@ -20,7 +20,7 @@ const ChatRoom: React.FC<{ roomId: string, username: string, onLeaveRoom: () => 
         const joinRoom = async () => {
             const connectionId = signalRService.getConnectionId();
             if (connectionId) {
-                chatApi.chatJoinChatRoomPost(roomId, username, connectionId).then(response => {
+                chatApi.chatJoinChatRoomPost(roomId, connectionId).then(response => {
                     setMessages(response.data.messages!);
                     setChatData(response.data.chatData!);
                     signalRService.joinGroup(roomId);
@@ -44,7 +44,7 @@ const ChatRoom: React.FC<{ roomId: string, username: string, onLeaveRoom: () => 
             const leaveRoom = async () => {
                 const connectionId = signalRService.getConnectionId();
                 if (connectionId) {
-                    chatApi.chatLeaveChatRoomPost(roomId, username, connectionId)
+                    chatApi.chatLeaveChatRoomPost(roomId, connectionId)
                         .then(() => {
                             signalRService.leaveGroup(roomId);
                         });

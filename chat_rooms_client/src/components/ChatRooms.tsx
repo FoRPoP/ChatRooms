@@ -24,13 +24,13 @@ const ChatRooms: React.FC<{ username: string, onSelectRoom: (roomId: string, roo
 
     useEffect(() => {
         refreshChatRooms();
-        chatApi.chatGetUserInfoGet(username)
+        chatApi.chatGetUserInfoGet()
             .then(response => setUserInfo(response.data))
             .catch(error => { console.error('There was an error fetching user info!', error); });
     }, []);
 
     const handleCreateChatRoom = (roomName: string, roomDescription: string) => {
-        chatApi.chatCreateChatRoomPost(username, roomName, roomDescription)
+        chatApi.chatCreateChatRoomPost(roomName, roomDescription)
             .then(_ => {
                 chatApi.chatGetChatRoomsGet()
                     .then(response => {
@@ -48,9 +48,9 @@ const ChatRooms: React.FC<{ username: string, onSelectRoom: (roomId: string, roo
     };
 
     const handleFavouriteToggle = (roomId: string) => {
-        chatApi.chatFavouriteChatRoomPost(roomId, username)
+        chatApi.chatFavouriteChatRoomPost(roomId)
             .then(() => {
-                chatApi.chatGetUserInfoGet(username)
+                chatApi.chatGetUserInfoGet()
                     .then(response => setUserInfo(response.data))
                     .catch(error => { console.error('There was an error fetching user info!', error); });
             })
