@@ -30,6 +30,7 @@
         public void AddMessage(Message message)
         {
             Messages.Add(message);
+            ChatData.TotalMessages++;
         }
     }
 }

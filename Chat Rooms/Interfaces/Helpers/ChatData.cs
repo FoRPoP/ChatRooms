@@ -8,6 +8,7 @@
         public string OwnerUsername { get; set; }
         public DateTime DateTimeCreated { get; set; }
         public List<string> ActiveChatters { get; set; }
+        public int TotalMessages { get; set; }
 
         public ChatData()
         {
@@ -17,6 +18,7 @@
             OwnerUsername = string.Empty;
             DateTimeCreated = DateTime.Now;
             ActiveChatters = new();
+            TotalMessages = 0;
         }
 
         public ChatData(string chatId, string name, string description, string ownerUsername)
@@ -27,6 +29,7 @@
             OwnerUsername = ownerUsername;
             DateTimeCreated = DateTime.Now;
             ActiveChatters = new();
+            TotalMessages = 0;
         }
     }
 }
