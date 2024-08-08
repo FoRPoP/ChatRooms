@@ -21,10 +21,10 @@ namespace ChatRoomsWeb.Controllers
 
         [HttpGet]
         [Route("GetUserInfo")]
-        public async Task<UserInfo> GetUserInfo(string username)
+        public async Task<UserInfo> GetUserInfo()
         {
             IChatService chatService = GetChatService();
-            return await chatService.GetUserInfo(username);
+            return await chatService.GetUserInfo(User.Identity!.Name!);
         }
 
         [HttpGet]
@@ -45,26 +45,26 @@ namespace ChatRoomsWeb.Controllers
 
         [HttpPost]
         [Route("CreateChatRoom")]
-        public async Task<bool> CreateChatRoom(string username, string name, string description)
+        public async Task<bool> CreateChatRoom(string name, string description)
         {
             IChatService chatService = GetChatService();
-            return await chatService.CreateChatRoom(username, name, description);
+            return await chatService.CreateChatRoom(User.Identity!.Name!, name, description);
         }
 
         [HttpPost]
         [Route("JoinChatRoom")]
-        public async Task<Chat?> JoinChatRoom(string chatRoomId, string username, string connectionId)
+        public async Task<Chat?> JoinChatRoom(string chatRoomId, string connectionId)
         {
             IChatService chatService = GetChatService();
-            return await chatService.JoinChatRoom(chatRoomId, username, connectionId);
+            return await chatService.JoinChatRoom(chatRoomId, User.Identity!.Name!, connectionId);
         }
 
         [HttpPost]
         [Route("FavouriteChatRoom")]
-        public async Task<bool> FavouriteChatRoom(string chatRoomId, string username)
+        public async Task<bool> FavouriteChatRoom(string chatRoomId)
         {
             IChatService chatService = GetChatService();
-            return await chatService.FavouriteChatRoom(chatRoomId, username);
+            return await chatService.FavouriteChatRoom(chatRoomId, User.Identity!.Name!);
         }
 
         [HttpPost]
@@ -77,10 +77,10 @@ namespace ChatRoomsWeb.Controllers
 
         [HttpPost]
         [Route("LeaveChatRoom")]
-        public async Task<bool> LeaveChatRoom(string chatRoomId, string username, string connectionId)
+        public async Task<bool> LeaveChatRoom(string chatRoomId, string connectionId)
         {
             IChatService chatService = GetChatService();
-            return await chatService.LeaveChatRoom(chatRoomId, username, connectionId);
+            return await chatService.LeaveChatRoom(chatRoomId, User.Identity!.Name!, connectionId);
         }
 
         [HttpDelete]
