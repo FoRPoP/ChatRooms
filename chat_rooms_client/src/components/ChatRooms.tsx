@@ -3,6 +3,7 @@ import { Label, PrimaryButton, Stack, TextField } from '@fluentui/react';
 import { ChatApi } from '../api/apis/chat-api';
 import { ChatData } from '../api/models/chat-data';
 import CreateChatRoomModal from './CreateChatRoomModal';
+import axiosInstance from '../axiosConfig';
 
 const ChatRooms: React.FC<{ username: string, onSelectRoom: (roomId: string, roomName: string) => void, onLogout: () => void}> = ({ username, onSelectRoom, onLogout }) => {
     const [chatRooms, setChatRooms] = useState<{ [key: string]: ChatData; }>({});
@@ -10,7 +11,7 @@ const ChatRooms: React.FC<{ username: string, onSelectRoom: (roomId: string, roo
     const [filterText, setFilterText] = useState<string>('');
     const [expandedRoom, setExpandedRoom] = useState<string | null>(null);
 
-    const chatApi = new ChatApi();
+    const chatApi = new ChatApi(undefined, '', axiosInstance);
 
     useEffect(() => {
         refreshChatRooms();

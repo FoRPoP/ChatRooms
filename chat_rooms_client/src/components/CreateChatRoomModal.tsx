@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Dialog, DialogType, DialogFooter, PrimaryButton, DefaultButton, TextField } from '@fluentui/react';
 import { ChatApi } from '../api/apis/chat-api';
+import axiosInstance from '../axiosConfig';
 
 interface ICreateChatRoomModalProps {
     isOpen: boolean;
@@ -24,7 +25,7 @@ const CreateChatRoomModal: React.FC<ICreateChatRoomModalProps> = ({ isOpen, onCl
     const [newRoomName, setNewRoomName] = useState('');
     const [newRoomDescription, setNewRoomDescription] = useState('');
 
-    const chatApi = new ChatApi();
+    const chatApi = new ChatApi(undefined, '', axiosInstance);
 
     return (
         <Dialog

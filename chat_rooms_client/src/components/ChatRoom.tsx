@@ -3,6 +3,7 @@ import { ChatApi } from '../api/apis/chat-api';
 import { ChatData, Message } from '../api';
 import { Label, PrimaryButton, Stack, TextField } from '@fluentui/react';
 import { signalRService } from '../signalRService';
+import axiosInstance from '../axiosConfig';
 
 const ChatRoom: React.FC<{ roomId: string, username: string, onLeaveRoom: () => void }> = ({ roomId, username, onLeaveRoom }) => {
     const [messages, setMessages] = useState<Message[]>([]);
@@ -13,14 +14,13 @@ const ChatRoom: React.FC<{ roomId: string, username: string, onLeaveRoom: () => 
     const chatContainerRef = useRef<HTMLDivElement>(null);
     const [isAtBottom, setIsAtBottom] = useState(true);
 
-    const chatApi = new ChatApi();
+    const chatApi = new ChatApi(undefined, '', axiosInstance);
 
     useEffect(() => {
         const joinRoom = async () => {
             const connectionId = signalRService.getConnectionId();
             if (connectionId) {
-                const apiClient = new ChatApi();
-                apiClient.chatJoinChatRoomPost(roomId, username, connectionId).then(response => {
+                chatApi.chatJoinChatRoomPost(roomId, username, connectionId).then(response => {
                     setMessages(response.data.messages!);
                     setChatData(response.data.chatData!);
                     signalRService.joinGroup(roomId);
@@ -44,8 +44,7 @@ const ChatRoom: React.FC<{ roomId: string, username: string, onLeaveRoom: () => 
             const leaveRoom = async () => {
                 const connectionId = signalRService.getConnectionId();
                 if (connectionId) {
-                    const apiClient = new ChatApi();
-                    apiClient.chatLeaveChatRoomPost(roomId, username, connectionId)
+                    chatApi.chatLeaveChatRoomPost(roomId, username, connectionId)
                         .then(() => {
                             signalRService.leaveGroup(roomId);
                         });
