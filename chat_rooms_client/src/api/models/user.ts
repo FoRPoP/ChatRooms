@@ -16,37 +16,19 @@
  * 
  *
  * @export
- * @interface Message
+ * @interface User
  */
-export interface Message {
+export interface User {
 
     /**
      * @type {string}
-     * @memberof Message
-     */
-    id?: string | null;
-
-    /**
-     * @type {string}
-     * @memberof Message
-     */
-    chatRoomId?: string | null;
-
-    /**
-     * @type {string}
-     * @memberof Message
+     * @memberof User
      */
     username?: string | null;
 
     /**
-     * @type {Date}
-     * @memberof Message
-     */
-    dateTimeSent?: Date;
-
-    /**
      * @type {string}
-     * @memberof Message
+     * @memberof User
      */
-    text?: string | null;
+    hashedPassword?: string | null;
 }
