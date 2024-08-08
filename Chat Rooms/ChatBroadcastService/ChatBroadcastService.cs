@@ -1,17 +1,11 @@
-using System;
-using System.Collections.Generic;
 using System.Fabric;
-using System.IO;
-using System.Linq;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 using Microsoft.AspNetCore.SignalR;
 using Interfaces.Helpers;
 using Interfaces;
-using Microsoft.ServiceFabric.Services.Remoting.Runtime;
 using Microsoft.Extensions.Configuration.Json;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.ServiceFabric.Services.Remoting.FabricTransport.Runtime;
 using Microsoft.ServiceFabric.Services.Remoting.V2.FabricTransport.Runtime;
 
