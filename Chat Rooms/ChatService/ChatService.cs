@@ -8,6 +8,7 @@ using System.Fabric;
 using Microsoft.ServiceFabric.Services.Remoting.Runtime;
 using Microsoft.ServiceFabric.Services.Remoting.Client;
 using Microsoft.ServiceFabric.Services.Remoting.V2.FabricTransport.Client;
+using System.Runtime.InteropServices;
 
 namespace ChatService
 {
@@ -24,6 +25,19 @@ namespace ChatService
         {
             _proxyFactory = new ServiceProxyFactory(c => { return new FabricTransportServiceRemotingClientFactory(); });
             _chatBroadcastServiceUri = new Uri("fabric:/Chat_Rooms/ChatBroadcastService");
+        }
+
+        public async Task<UserInfo> GetUserInfo(string username)
+        {
+            IReliableDictionary<string, UserInfo> _userInfos = await StateManager.GetOrAddAsync<IReliableDictionary<string, UserInfo>>("userInfos");
+
+            UserInfo userInfo;
+            using (ITransaction tx = StateManager.CreateTransaction())
+            {
+                userInfo = await _userInfos.GetOrAddAsync(tx, username, _ => new UserInfo());
+                await tx.CommitAsync();
+            }
+            return userInfo;
         }
 
         public async Task<Dictionary<string, ChatData>> GetChatRooms()
@@ -71,6 +85,7 @@ namespace ChatService
         public async Task<bool> CreateChatRoom(string ownerUsername, string name, string description)
         {
             IReliableDictionary<string, Chat> _chatRooms = await StateManager.GetOrAddAsync<IReliableDictionary<string, Chat>>("chatRooms");
+            IReliableDictionary<string, UserInfo> _userInfos = await StateManager.GetOrAddAsync<IReliableDictionary<string, UserInfo>>("userInfos");
             IReliableDictionary<string, int> _IDs = await StateManager.GetOrAddAsync<IReliableDictionary<string, int>>("IDs");
 
             bool result;
@@ -81,6 +96,11 @@ namespace ChatService
                 Chat chat = new(chatData);
 
                 result = await _chatRooms.TryAddAsync(tx, chatData.ID, chat);
+
+                UserInfo userInfo = await _userInfos.GetOrAddAsync(tx, ownerUsername, _ => new UserInfo());
+                userInfo.CreatedChatsIds.Add(chatData.ID);
+                await _userInfos.AddOrUpdateAsync(tx, ownerUsername, userInfo, (_, __) => userInfo);
+
                 await tx.CommitAsync();
             }
 
@@ -112,6 +132,24 @@ namespace ChatService
             return chat.Value;
         }
 
+        public async Task<bool> FavouriteChatRoom(string chatRoomId, string username)
+        {
+            IReliableDictionary<string, UserInfo> _userInfos = await StateManager.GetOrAddAsync<IReliableDictionary<string, UserInfo>>("userInfos");
+
+            using (ITransaction tx = StateManager.CreateTransaction())
+            {
+                UserInfo userInfo = await _userInfos.GetOrAddAsync(tx, username, _ => new UserInfo());
+                if (!userInfo.FavouritedChatsIds.Remove(chatRoomId))
+                {
+                    userInfo.FavouritedChatsIds.Add(chatRoomId);
+                }
+                await _userInfos.AddOrUpdateAsync(tx, username, userInfo, (_, __) => userInfo);
+                await tx.CommitAsync();
+            }
+
+            return true;
+        }
+
         public async Task<bool> LeaveChatRoom(string chatRoomId, string username, string connectionId)
         {
             IReliableDictionary<string, Chat> _chatRooms = await StateManager.GetOrAddAsync<IReliableDictionary<string, Chat>>("chatRooms");
@@ -138,6 +176,7 @@ namespace ChatService
         public async Task<bool> SendMessage(string chatRoomId, Message message)
         {
             IReliableDictionary<string, Chat> _chatRooms = await StateManager.GetOrAddAsync<IReliableDictionary<string, Chat>>("chatRooms");
+            IReliableDictionary<string, UserInfo> _userInfos = await StateManager.GetOrAddAsync<IReliableDictionary<string, UserInfo>>("userInfos");
 
             using (ITransaction tx = StateManager.CreateTransaction())
             {
@@ -147,6 +186,11 @@ namespace ChatService
                 {
                     chat.Value.AddMessage(message);
                     await chatBroadcastService.SendMessage(chatRoomId, message);
+
+                    UserInfo userInfo = await _userInfos.GetOrAddAsync(tx, message.Username, _ => new UserInfo());
+                    userInfo.MessagesSent.Add(message);
+                    await _userInfos.AddOrUpdateAsync(tx, message.Username, userInfo, (_, __) => userInfo);
+
                     await tx.CommitAsync();
                 }
                 else

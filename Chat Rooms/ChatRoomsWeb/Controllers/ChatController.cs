@@ -20,6 +20,14 @@ namespace ChatRoomsWeb.Controllers
         }
 
         [HttpGet]
+        [Route("GetUserInfo")]
+        public async Task<UserInfo> GetUserInfo(string username)
+        {
+            IChatService chatService = GetChatService();
+            return await chatService.GetUserInfo(username);
+        }
+
+        [HttpGet]
         [Route("GetChatRooms")]
         public async Task<Dictionary<string, ChatData>> GetChatRooms()
         {
@@ -49,6 +57,14 @@ namespace ChatRoomsWeb.Controllers
         {
             IChatService chatService = GetChatService();
             return await chatService.JoinChatRoom(chatRoomId, username, connectionId);
+        }
+
+        [HttpPost]
+        [Route("FavouriteChatRoom")]
+        public async Task<bool> FavouriteChatRoom(string chatRoomId, string username)
+        {
+            IChatService chatService = GetChatService();
+            return await chatService.FavouriteChatRoom(chatRoomId, username);
         }
 
         [HttpPost]
