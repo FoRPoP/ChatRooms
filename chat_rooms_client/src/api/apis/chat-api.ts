@@ -29,13 +29,12 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
     return {
         /**
          * 
-         * @param {string} [username] 
          * @param {string} [name] 
          * @param {string} [description] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatCreateChatRoomPost: async (username?: string, name?: string, description?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatCreateChatRoomPost: async (name?: string, description?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/Chat/CreateChatRoom`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -53,10 +52,6 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
                     ? await configuration.apiKey("Authorization")
                     : await configuration.apiKey;
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            if (username !== undefined) {
-                localVarQueryParameter['username'] = username;
             }
 
             if (name !== undefined) {
@@ -132,11 +127,10 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @param {string} [chatRoomId] 
-         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatFavouriteChatRoomPost: async (chatRoomId?: string, username?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatFavouriteChatRoomPost: async (chatRoomId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/Chat/FavouriteChatRoom`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -158,10 +152,6 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (chatRoomId !== undefined) {
                 localVarQueryParameter['chatRoomId'] = chatRoomId;
-            }
-
-            if (username !== undefined) {
-                localVarQueryParameter['username'] = username;
             }
 
             const query = new URLSearchParams(localVarUrlObj.search);
@@ -269,11 +259,10 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatGetUserInfoGet: async (username?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatGetUserInfoGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/Chat/GetUserInfo`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -291,10 +280,6 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
                     ? await configuration.apiKey("Authorization")
                     : await configuration.apiKey;
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            if (username !== undefined) {
-                localVarQueryParameter['username'] = username;
             }
 
             const query = new URLSearchParams(localVarUrlObj.search);
@@ -316,12 +301,11 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @param {string} [chatRoomId] 
-         * @param {string} [username] 
          * @param {string} [connectionId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatJoinChatRoomPost: async (chatRoomId?: string, username?: string, connectionId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatJoinChatRoomPost: async (chatRoomId?: string, connectionId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/Chat/JoinChatRoom`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -343,10 +327,6 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (chatRoomId !== undefined) {
                 localVarQueryParameter['chatRoomId'] = chatRoomId;
-            }
-
-            if (username !== undefined) {
-                localVarQueryParameter['username'] = username;
             }
 
             if (connectionId !== undefined) {
@@ -372,12 +352,11 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @param {string} [chatRoomId] 
-         * @param {string} [username] 
          * @param {string} [connectionId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatLeaveChatRoomPost: async (chatRoomId?: string, username?: string, connectionId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatLeaveChatRoomPost: async (chatRoomId?: string, connectionId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/Chat/LeaveChatRoom`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -399,10 +378,6 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (chatRoomId !== undefined) {
                 localVarQueryParameter['chatRoomId'] = chatRoomId;
-            }
-
-            if (username !== undefined) {
-                localVarQueryParameter['username'] = username;
             }
 
             if (connectionId !== undefined) {
@@ -487,14 +462,13 @@ export const ChatApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {string} [username] 
          * @param {string} [name] 
          * @param {string} [description] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatCreateChatRoomPost(username?: string, name?: string, description?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<boolean>>> {
-            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatCreateChatRoomPost(username, name, description, options);
+        async chatCreateChatRoomPost(name?: string, description?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<boolean>>> {
+            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatCreateChatRoomPost(name, description, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -516,12 +490,11 @@ export const ChatApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} [chatRoomId] 
-         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatFavouriteChatRoomPost(chatRoomId?: string, username?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<boolean>>> {
-            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatFavouriteChatRoomPost(chatRoomId, username, options);
+        async chatFavouriteChatRoomPost(chatRoomId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<boolean>>> {
+            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatFavouriteChatRoomPost(chatRoomId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -554,12 +527,11 @@ export const ChatApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatGetUserInfoGet(username?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<UserInfo>>> {
-            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatGetUserInfoGet(username, options);
+        async chatGetUserInfoGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<UserInfo>>> {
+            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatGetUserInfoGet(options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -568,13 +540,12 @@ export const ChatApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} [chatRoomId] 
-         * @param {string} [username] 
          * @param {string} [connectionId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatJoinChatRoomPost(chatRoomId?: string, username?: string, connectionId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<Chat>>> {
-            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatJoinChatRoomPost(chatRoomId, username, connectionId, options);
+        async chatJoinChatRoomPost(chatRoomId?: string, connectionId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<Chat>>> {
+            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatJoinChatRoomPost(chatRoomId, connectionId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -583,13 +554,12 @@ export const ChatApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} [chatRoomId] 
-         * @param {string} [username] 
          * @param {string} [connectionId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatLeaveChatRoomPost(chatRoomId?: string, username?: string, connectionId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<boolean>>> {
-            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatLeaveChatRoomPost(chatRoomId, username, connectionId, options);
+        async chatLeaveChatRoomPost(chatRoomId?: string, connectionId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<boolean>>> {
+            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatLeaveChatRoomPost(chatRoomId, connectionId, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -620,14 +590,13 @@ export const ChatApiFactory = function (configuration?: Configuration, basePath?
     return {
         /**
          * 
-         * @param {string} [username] 
          * @param {string} [name] 
          * @param {string} [description] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatCreateChatRoomPost(username?: string, name?: string, description?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<boolean>> {
-            return ChatApiFp(configuration).chatCreateChatRoomPost(username, name, description, options).then((request) => request(axios, basePath));
+        async chatCreateChatRoomPost(name?: string, description?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<boolean>> {
+            return ChatApiFp(configuration).chatCreateChatRoomPost(name, description, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -641,12 +610,11 @@ export const ChatApiFactory = function (configuration?: Configuration, basePath?
         /**
          * 
          * @param {string} [chatRoomId] 
-         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatFavouriteChatRoomPost(chatRoomId?: string, username?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<boolean>> {
-            return ChatApiFp(configuration).chatFavouriteChatRoomPost(chatRoomId, username, options).then((request) => request(axios, basePath));
+        async chatFavouriteChatRoomPost(chatRoomId?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<boolean>> {
+            return ChatApiFp(configuration).chatFavouriteChatRoomPost(chatRoomId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -667,34 +635,31 @@ export const ChatApiFactory = function (configuration?: Configuration, basePath?
         },
         /**
          * 
-         * @param {string} [username] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatGetUserInfoGet(username?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<UserInfo>> {
-            return ChatApiFp(configuration).chatGetUserInfoGet(username, options).then((request) => request(axios, basePath));
+        async chatGetUserInfoGet(options?: AxiosRequestConfig): Promise<AxiosResponse<UserInfo>> {
+            return ChatApiFp(configuration).chatGetUserInfoGet(options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {string} [chatRoomId] 
-         * @param {string} [username] 
          * @param {string} [connectionId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatJoinChatRoomPost(chatRoomId?: string, username?: string, connectionId?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<Chat>> {
-            return ChatApiFp(configuration).chatJoinChatRoomPost(chatRoomId, username, connectionId, options).then((request) => request(axios, basePath));
+        async chatJoinChatRoomPost(chatRoomId?: string, connectionId?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<Chat>> {
+            return ChatApiFp(configuration).chatJoinChatRoomPost(chatRoomId, connectionId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {string} [chatRoomId] 
-         * @param {string} [username] 
          * @param {string} [connectionId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatLeaveChatRoomPost(chatRoomId?: string, username?: string, connectionId?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<boolean>> {
-            return ChatApiFp(configuration).chatLeaveChatRoomPost(chatRoomId, username, connectionId, options).then((request) => request(axios, basePath));
+        async chatLeaveChatRoomPost(chatRoomId?: string, connectionId?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<boolean>> {
+            return ChatApiFp(configuration).chatLeaveChatRoomPost(chatRoomId, connectionId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -718,15 +683,14 @@ export const ChatApiFactory = function (configuration?: Configuration, basePath?
 export class ChatApi extends BaseAPI {
     /**
      * 
-     * @param {string} [username] 
      * @param {string} [name] 
      * @param {string} [description] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ChatApi
      */
-    public async chatCreateChatRoomPost(username?: string, name?: string, description?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<boolean>> {
-        return ChatApiFp(this.configuration).chatCreateChatRoomPost(username, name, description, options).then((request) => request(this.axios, this.basePath));
+    public async chatCreateChatRoomPost(name?: string, description?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<boolean>> {
+        return ChatApiFp(this.configuration).chatCreateChatRoomPost(name, description, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
@@ -741,13 +705,12 @@ export class ChatApi extends BaseAPI {
     /**
      * 
      * @param {string} [chatRoomId] 
-     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ChatApi
      */
-    public async chatFavouriteChatRoomPost(chatRoomId?: string, username?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<boolean>> {
-        return ChatApiFp(this.configuration).chatFavouriteChatRoomPost(chatRoomId, username, options).then((request) => request(this.axios, this.basePath));
+    public async chatFavouriteChatRoomPost(chatRoomId?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<boolean>> {
+        return ChatApiFp(this.configuration).chatFavouriteChatRoomPost(chatRoomId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
@@ -770,37 +733,34 @@ export class ChatApi extends BaseAPI {
     }
     /**
      * 
-     * @param {string} [username] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ChatApi
      */
-    public async chatGetUserInfoGet(username?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<UserInfo>> {
-        return ChatApiFp(this.configuration).chatGetUserInfoGet(username, options).then((request) => request(this.axios, this.basePath));
+    public async chatGetUserInfoGet(options?: AxiosRequestConfig) : Promise<AxiosResponse<UserInfo>> {
+        return ChatApiFp(this.configuration).chatGetUserInfoGet(options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
      * @param {string} [chatRoomId] 
-     * @param {string} [username] 
      * @param {string} [connectionId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ChatApi
      */
-    public async chatJoinChatRoomPost(chatRoomId?: string, username?: string, connectionId?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<Chat>> {
-        return ChatApiFp(this.configuration).chatJoinChatRoomPost(chatRoomId, username, connectionId, options).then((request) => request(this.axios, this.basePath));
+    public async chatJoinChatRoomPost(chatRoomId?: string, connectionId?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<Chat>> {
+        return ChatApiFp(this.configuration).chatJoinChatRoomPost(chatRoomId, connectionId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
      * @param {string} [chatRoomId] 
-     * @param {string} [username] 
      * @param {string} [connectionId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ChatApi
      */
-    public async chatLeaveChatRoomPost(chatRoomId?: string, username?: string, connectionId?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<boolean>> {
-        return ChatApiFp(this.configuration).chatLeaveChatRoomPost(chatRoomId, username, connectionId, options).then((request) => request(this.axios, this.basePath));
+    public async chatLeaveChatRoomPost(chatRoomId?: string, connectionId?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<boolean>> {
+        return ChatApiFp(this.configuration).chatLeaveChatRoomPost(chatRoomId, connectionId, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
