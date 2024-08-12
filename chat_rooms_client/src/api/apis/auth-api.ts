@@ -17,7 +17,6 @@ import { Configuration } from '../configuration';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
-import { User } from '../models';
 /**
  * AuthApi - axios parameter creator
  * @export
@@ -26,11 +25,12 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
     return {
         /**
          * 
-         * @param {User} [body] 
+         * @param {string} [username] 
+         * @param {string} [password] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authLoginPost: async (body?: User, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        authLoginPost: async (username?: string, password?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/Auth/Login`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -50,7 +50,13 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
-            localVarHeaderParameter['Content-Type'] = 'application/json';
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
+            }
+
+            if (password !== undefined) {
+                localVarQueryParameter['password'] = password;
+            }
 
             const query = new URLSearchParams(localVarUrlObj.search);
             for (const key in localVarQueryParameter) {
@@ -62,8 +68,6 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             localVarUrlObj.search = (new URLSearchParams(query)).toString();
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers!['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
 
             return {
                 url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -72,11 +76,12 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {User} [body] 
+         * @param {string} [username] 
+         * @param {string} [password] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authRegisterPost: async (body?: User, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        authRegisterPost: async (username?: string, password?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/Auth/Register`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -96,7 +101,13 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
-            localVarHeaderParameter['Content-Type'] = 'application/json';
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
+            }
+
+            if (password !== undefined) {
+                localVarQueryParameter['password'] = password;
+            }
 
             const query = new URLSearchParams(localVarUrlObj.search);
             for (const key in localVarQueryParameter) {
@@ -108,8 +119,6 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             localVarUrlObj.search = (new URLSearchParams(query)).toString();
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers!['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
 
             return {
                 url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
@@ -127,12 +136,13 @@ export const AuthApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {User} [body] 
+         * @param {string} [username] 
+         * @param {string} [password] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authLoginPost(body?: User, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<string>>> {
-            const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authLoginPost(body, options);
+        async authLoginPost(username?: string, password?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<string>>> {
+            const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authLoginPost(username, password, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -140,12 +150,13 @@ export const AuthApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {User} [body] 
+         * @param {string} [username] 
+         * @param {string} [password] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authRegisterPost(body?: User, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<boolean>>> {
-            const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authRegisterPost(body, options);
+        async authRegisterPost(username?: string, password?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<boolean>>> {
+            const localVarAxiosArgs = await AuthApiAxiosParamCreator(configuration).authRegisterPost(username, password, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -162,21 +173,23 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
     return {
         /**
          * 
-         * @param {User} [body] 
+         * @param {string} [username] 
+         * @param {string} [password] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authLoginPost(body?: User, options?: AxiosRequestConfig): Promise<AxiosResponse<string>> {
-            return AuthApiFp(configuration).authLoginPost(body, options).then((request) => request(axios, basePath));
+        async authLoginPost(username?: string, password?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<string>> {
+            return AuthApiFp(configuration).authLoginPost(username, password, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {User} [body] 
+         * @param {string} [username] 
+         * @param {string} [password] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authRegisterPost(body?: User, options?: AxiosRequestConfig): Promise<AxiosResponse<boolean>> {
-            return AuthApiFp(configuration).authRegisterPost(body, options).then((request) => request(axios, basePath));
+        async authRegisterPost(username?: string, password?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<boolean>> {
+            return AuthApiFp(configuration).authRegisterPost(username, password, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -190,22 +203,24 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
 export class AuthApi extends BaseAPI {
     /**
      * 
-     * @param {User} [body] 
+     * @param {string} [username] 
+     * @param {string} [password] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApi
      */
-    public async authLoginPost(body?: User, options?: AxiosRequestConfig) : Promise<AxiosResponse<string>> {
-        return AuthApiFp(this.configuration).authLoginPost(body, options).then((request) => request(this.axios, this.basePath));
+    public async authLoginPost(username?: string, password?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<string>> {
+        return AuthApiFp(this.configuration).authLoginPost(username, password, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
-     * @param {User} [body] 
+     * @param {string} [username] 
+     * @param {string} [password] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthApi
      */
-    public async authRegisterPost(body?: User, options?: AxiosRequestConfig) : Promise<AxiosResponse<boolean>> {
-        return AuthApiFp(this.configuration).authRegisterPost(body, options).then((request) => request(this.axios, this.basePath));
+    public async authRegisterPost(username?: string, password?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<boolean>> {
+        return AuthApiFp(this.configuration).authRegisterPost(username, password, options).then((request) => request(this.axios, this.basePath));
     }
 }

@@ -12,6 +12,7 @@
  * Do not edit the class manually.
  */
 
+import { RegionsEnum } from './regions-enum';
  /**
  * 
  *
@@ -43,6 +44,12 @@ export interface ChatData {
      * @memberof ChatData
      */
     ownerUsername?: string | null;
+
+    /**
+     * @type {RegionsEnum}
+     * @memberof ChatData
+     */
+    region?: RegionsEnum;
 
     /**
      * @type {Date}
