@@ -26,13 +26,13 @@ namespace AuthService
             _configuration = configuration;
         }
 
-        public async Task<bool> Register(User newUser)
+        public async Task<bool> Register(string username, string password)
         {
             IReliableDictionary<string, User> _users = await StateManager.GetOrAddAsync<IReliableDictionary<string, User>>("users");
 
             using (ITransaction tx = StateManager.CreateTransaction())
             {
-                ConditionalValue<User> user = await _users.TryGetValueAsync(tx, newUser.Username);
+                ConditionalValue<User> user = await _users.TryGetValueAsync(tx, username);
                 if (user.HasValue)
                 {
                     await tx.CommitAsync();
@@ -40,7 +40,7 @@ namespace AuthService
                 }
                 else
                 {
-                    newUser.HashedPassword = BCrypt.Net.BCrypt.HashPassword(newUser.HashedPassword);
+                    User newUser = new(username, BCrypt.Net.BCrypt.HashPassword(password), new UserInfo());
                     await _users.AddAsync(tx, newUser.Username, newUser);
                     await tx.CommitAsync();
                     return true;
@@ -48,16 +48,16 @@ namespace AuthService
             }
         }
 
-        public async Task<string> Login(User user)
+        public async Task<string> Login(string username, string password)
         {
             IReliableDictionary<string, User> _users = await StateManager.GetOrAddAsync<IReliableDictionary<string, User>>("users");
 
             using (ITransaction tx = StateManager.CreateTransaction())
             {
-                ConditionalValue<User> userResult = await  _users.TryGetValueAsync(tx, user.Username);
-                if (userResult.HasValue && BCrypt.Net.BCrypt.Verify(user.HashedPassword, userResult.Value.HashedPassword))
+                ConditionalValue<User> userResult = await  _users.TryGetValueAsync(tx, username);
+                if (userResult.HasValue && BCrypt.Net.BCrypt.Verify(password, userResult.Value.HashedPassword))
                 {
-                    return GenerateJwtToken(user.Username);
+                    return GenerateJwtToken(username);
                 }
 
                 return "";

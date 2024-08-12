@@ -9,6 +9,7 @@ using Microsoft.ServiceFabric.Services.Remoting.Runtime;
 using Microsoft.ServiceFabric.Services.Remoting.Client;
 using Microsoft.ServiceFabric.Services.Remoting.V2.FabricTransport.Client;
 using System.Runtime.InteropServices;
+using Microsoft.ServiceFabric.Services.Client;
 
 namespace ChatService
 {
@@ -82,7 +83,7 @@ namespace ChatService
             return chatData;
         }
 
-        public async Task<bool> CreateChatRoom(string ownerUsername, string name, string description)
+        public async Task<bool> CreateChatRoom(string ownerUsername, string name, string description, RegionsEnum region)
         {
             IReliableDictionary<string, Chat> _chatRooms = await StateManager.GetOrAddAsync<IReliableDictionary<string, Chat>>("chatRooms");
             IReliableDictionary<string, UserInfo> _userInfos = await StateManager.GetOrAddAsync<IReliableDictionary<string, UserInfo>>("userInfos");
@@ -92,7 +93,7 @@ namespace ChatService
             using (ITransaction tx = StateManager.CreateTransaction())
             {
                 int nextChatRoomId = await _IDs.AddOrUpdateAsync(tx, "ChatRoomIDs", 0, (_, value) => value+1);
-                ChatData chatData = new(nextChatRoomId.ToString(), name, description, ownerUsername);
+                ChatData chatData = new(nextChatRoomId.ToString(), name, description, ownerUsername, region);
                 Chat chat = new(chatData);
 
                 result = await _chatRooms.TryAddAsync(tx, chatData.ID, chat);
@@ -114,10 +115,10 @@ namespace ChatService
 
             using (ITransaction tx = StateManager.CreateTransaction())
             {
-                IChatBroadcastService chatBroadcastService = GetChatBroadcastService();
                 chat = await _chatRooms.TryGetValueAsync(tx, chatRoomId);
                 if (chat.HasValue)
                 {
+                    IChatBroadcastService chatBroadcastService = GetChatBroadcastService(chat.Value.ChatData.Region.ToString());
                     chat.Value.AddChatter(username);
                     await chatBroadcastService.JoinChatRoom(connectionId, chatRoomId);
                     await tx.CommitAsync();
@@ -156,10 +157,10 @@ namespace ChatService
 
             using (ITransaction tx = StateManager.CreateTransaction())
             {
-                IChatBroadcastService chatBroadcastService = GetChatBroadcastService();
                 ConditionalValue<Chat> chat = await _chatRooms.TryGetValueAsync(tx, chatRoomId);
                 if (chat.HasValue)
                 {
+                    IChatBroadcastService chatBroadcastService = GetChatBroadcastService(chat.Value.ChatData.Region.ToString());
                     chat.Value.RemoveChatter(username);
                     await chatBroadcastService.LeaveChatRoom(connectionId, chatRoomId);
                     await tx.CommitAsync();
@@ -180,10 +181,10 @@ namespace ChatService
 
             using (ITransaction tx = StateManager.CreateTransaction())
             {
-                IChatBroadcastService chatBroadcastService = GetChatBroadcastService();
                 ConditionalValue<Chat> chat = await _chatRooms.TryGetValueAsync(tx, chatRoomId);
                 if (chat.HasValue)
                 {
+                    IChatBroadcastService chatBroadcastService = GetChatBroadcastService(chat.Value.ChatData.Region.ToString());
                     chat.Value.AddMessage(message);
                     await chatBroadcastService.SendMessage(chatRoomId, message);
 
@@ -223,9 +224,9 @@ namespace ChatService
             }
         }
 
-        private IChatBroadcastService GetChatBroadcastService()
+        private IChatBroadcastService GetChatBroadcastService(string partitionKeyName)
         {
-            return _proxyFactory.CreateServiceProxy<IChatBroadcastService>(_chatBroadcastServiceUri);
+            return _proxyFactory.CreateServiceProxy<IChatBroadcastService>(_chatBroadcastServiceUri, new ServicePartitionKey(partitionKeyName));
         }
 
         /// <summary>

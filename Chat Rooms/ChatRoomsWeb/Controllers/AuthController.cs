@@ -23,18 +23,18 @@ namespace ChatRoomsWeb.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public Task<bool> Register(User user)
+        public Task<bool> Register(string username, string password)
         {
             IAuthService authService = GetAuthService();
-            return authService.Register(user);
+            return authService.Register(username, password);
         }
 
         [HttpPost]
         [Route("Login")]
-        public Task<string> Login(User user)
+        public Task<string> Login(string username, string password)
         {
             IAuthService authService = GetAuthService();
-            return authService.Login(user);
+            return authService.Login(username, password);
         }
 
         private IAuthService GetAuthService()

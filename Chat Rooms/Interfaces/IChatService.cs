@@ -11,7 +11,7 @@ namespace Interfaces
 
         Task<ChatData?> GetChatRoom(string chatRoomId);
 
-        Task<bool> CreateChatRoom(string username, string name, string description);
+        Task<bool> CreateChatRoom(string username, string name, string description, RegionsEnum region);
 
         Task<Chat?> JoinChatRoom(string chatRoomId, string username, string connectionId);
 

@@ -5,7 +5,7 @@ namespace Interfaces
 {
     public interface IAuthService : IService
     {
-        Task<bool> Register(User user);
-        Task<string> Login(User user);
+        Task<bool> Register(string username, string password);
+        Task<string> Login(string username, string password);
     }
 }

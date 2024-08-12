@@ -45,10 +45,10 @@ namespace ChatRoomsWeb.Controllers
 
         [HttpPost]
         [Route("CreateChatRoom")]
-        public async Task<bool> CreateChatRoom(string name, string description)
+        public async Task<bool> CreateChatRoom(string name, string description, RegionsEnum region)
         {
             IChatService chatService = GetChatService();
-            return await chatService.CreateChatRoom(User.Identity!.Name!, name, description);
+            return await chatService.CreateChatRoom(User.Identity!.Name!, name, description, region);
         }
 
         [HttpPost]
