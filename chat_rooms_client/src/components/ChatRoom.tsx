@@ -9,10 +9,10 @@ const ChatRoom: React.FC<{ roomId: string, username: string, onLeaveRoom: () => 
     const [messages, setMessages] = useState<Message[]>([]);
     const [newMessageText, setNewMessageText] = useState<string>('');
     const [chatData, setChatData] = useState<ChatData>();
+    const [isAtBottom, setIsAtBottom] = useState(true);
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const chatContainerRef = useRef<HTMLDivElement>(null);
-    const [isAtBottom, setIsAtBottom] = useState(true);
 
     const chatApi = new ChatApi(undefined, '', axiosInstance);
 
