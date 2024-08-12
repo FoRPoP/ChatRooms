@@ -18,9 +18,8 @@ const AuthPage: React.FC<IAuthPage> = ({ onLogin }) => {
     const handleSubmit = async () => {
         if (username && password) {
             try {
-                const user: User = { username: username, hashedPassword: password };
                 if (isLogin) {
-                    authApi.authLoginPost(user).then(response => {
+                    authApi.authLoginPost(username, password).then(response => {
                         if (response.data !== '') {
                             localStorage.setItem('jwtToken', response.data);
                             onLogin(username);
@@ -30,7 +29,7 @@ const AuthPage: React.FC<IAuthPage> = ({ onLogin }) => {
                         }
                     });
                 } else {
-                    authApi.authRegisterPost(user).then(response => {
+                    authApi.authRegisterPost(username, password).then(response => {
                         response.data ? setMessage('User registered successfully!') : setMessage('User registration failed. Please try again.');
                     });
                 }
