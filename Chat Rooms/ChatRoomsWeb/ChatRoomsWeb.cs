@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using System.Fabric.Description;
 
 namespace ChatRoomsWeb
 {
@@ -24,6 +25,9 @@ namespace ChatRoomsWeb
     internal sealed class ChatRoomsWeb : StatelessService
     {
         private IConfiguration _configuration;
+
+        private static readonly object metricsLock = new object();
+        private static int requestCountLastPeriod = 0;
 
         public ChatRoomsWeb(StatelessServiceContext context, IConfiguration configuration)
             : base(context)
@@ -118,6 +122,79 @@ namespace ChatRoomsWeb
 
                     }))
             };
+        }
+
+        public static void RegisterRequestForMetrics()
+        {
+            lock (metricsLock)
+            {
+                requestCountLastPeriod++;
+            }
+        }
+
+        protected override async Task RunAsync(CancellationToken cancellationToken)
+        {
+            await DefineMetricsAndPolicies();
+
+            while (true)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                lock (metricsLock)
+                {
+                    Partition.ReportLoad(new List<LoadMetric> { new LoadMetric("TotalRequestsPerPeriod", requestCountLastPeriod) });
+                    requestCountLastPeriod = 0;
+                }
+
+                await Task.Delay(TimeSpan.FromSeconds(4), cancellationToken);
+            }
+        }
+
+        private async Task DefineMetricsAndPolicies()
+        {
+            FabricClient fabricClient = new FabricClient();
+            StatelessServiceUpdateDescription updateDescription = new();
+
+            RegisterMetrics(updateDescription);
+            RegisterScaling(updateDescription);
+
+            await fabricClient.ServiceManager.UpdateServiceAsync(Context.ServiceName, updateDescription);
+        }
+
+        private void RegisterMetrics(StatelessServiceUpdateDescription updateDescription)
+        {
+            var requestsPerSecondMetric = new StatelessServiceLoadMetricDescription
+            {
+                Name = "TotalRequestsPerPeriod",
+                DefaultLoad = 0,
+                Weight = ServiceLoadMetricWeight.High
+            };
+
+            updateDescription.Metrics ??= new MetricsCollection();
+            updateDescription.Metrics.Add(requestsPerSecondMetric);
+        }
+
+        private void RegisterScaling(StatelessServiceUpdateDescription updateDescription)
+        {
+            PartitionInstanceCountScaleMechanism partitionInstanceCountScaleMechanism = new PartitionInstanceCountScaleMechanism
+            {
+                MinInstanceCount = 2,
+                MaxInstanceCount = 4,
+                ScaleIncrement = 1
+            };
+
+            AveragePartitionLoadScalingTrigger averagePartitionLoadScalingTrigger = new AveragePartitionLoadScalingTrigger
+            {
+                MetricName = "TotalRequestsPerPeriod",
+                LowerLoadThreshold = 14.0,
+                UpperLoadThreshold = 44.0,
+                ScaleInterval = TimeSpan.FromMinutes(4)
+            };
+
+            ScalingPolicyDescription scalingPolicyDescription = new ScalingPolicyDescription(partitionInstanceCountScaleMechanism, averagePartitionLoadScalingTrigger);
+
+            updateDescription.ScalingPolicies ??= new List<ScalingPolicyDescription>();
+            updateDescription.ScalingPolicies.Add(scalingPolicyDescription);
         }
     }
 }
