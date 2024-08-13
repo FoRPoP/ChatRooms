@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChatApi } from '../api/apis/chat-api';
-import { ChatData, Message } from '../api';
+import { ChatData, Message, RegionsEnum } from '../api';
 import { Label, PrimaryButton, Stack, TextField } from '@fluentui/react';
 import { signalRService } from '../signalRService';
 import axiosInstance from '../axiosConfig';
 
-const ChatRoom: React.FC<{ roomId: string, username: string, onLeaveRoom: () => void }> = ({ roomId, username, onLeaveRoom }) => {
+const ChatRoom: React.FC<{ roomId: string, username: string, region: RegionsEnum, onLeaveRoom: () => void }> = ({ roomId, username, region, onLeaveRoom }) => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [newMessageText, setNewMessageText] = useState<string>('');
     const [chatData, setChatData] = useState<ChatData>();
@@ -20,7 +20,7 @@ const ChatRoom: React.FC<{ roomId: string, username: string, onLeaveRoom: () => 
         const joinRoom = async () => {
             const connectionId = signalRService.getConnectionId();
             if (connectionId) {
-                chatApi.chatJoinChatRoomPost(roomId, connectionId).then(response => {
+                chatApi.chatJoinChatRoomPost(roomId, connectionId, region).then(response => {
                     setMessages(response.data.messages!);
                     setChatData(response.data.chatData!);
                     signalRService.joinGroup(roomId);
@@ -44,7 +44,7 @@ const ChatRoom: React.FC<{ roomId: string, username: string, onLeaveRoom: () => 
             const leaveRoom = async () => {
                 const connectionId = signalRService.getConnectionId();
                 if (connectionId) {
-                    chatApi.chatLeaveChatRoomPost(roomId, connectionId)
+                    chatApi.chatLeaveChatRoomPost(roomId, connectionId, chatData?.region)
                         .then(() => {
                             signalRService.leaveGroup(roomId);
                         });
@@ -72,9 +72,9 @@ const ChatRoom: React.FC<{ roomId: string, username: string, onLeaveRoom: () => 
 
     const handleDeleteRoom = () => {
         const systemMessage: Message = { chatRoomId: roomId, username: 'system', text: 'Room is closing' };
-        chatApi.chatSendMessagePost(systemMessage, roomId)
+        chatApi.chatSendMessagePost(systemMessage, roomId, region)
             .then(() => {
-                chatApi.chatDeleteChatRoomDelete(roomId)
+                chatApi.chatDeleteChatRoomDelete(roomId, region)
                     .catch(error => { console.error('There was an error deleting the chat room!', error); });
             })
     };
@@ -82,7 +82,7 @@ const ChatRoom: React.FC<{ roomId: string, username: string, onLeaveRoom: () => 
     const sendMessage = () => {
         if (newMessageText.trim()) {
             const message: Message = { chatRoomId: roomId, username: username, text: newMessageText };
-            chatApi.chatSendMessagePost(message, roomId)
+            chatApi.chatSendMessagePost(message, roomId, region)
                 .then(() => { setNewMessageText(''); })
                 .catch(error => { console.error('There was an error sending the message!', error); });
         }

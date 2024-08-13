@@ -3,11 +3,12 @@ import ChatRooms from './components/ChatRooms';
 import ChatRoom from './components/ChatRoom';
 import AuthPage from './components/AuthPage';
 import { signalRService } from './signalRService';
+import { RegionsEnum } from './api';
 
 const App: React.FC = () => {
     const [username, setUsername] = useState<string>('');
     const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
-    const [selectedRoomName, setSelectedRoomName] = useState<string>('');
+    const [selectedRegion, setSelectedRegion] = useState<RegionsEnum>(RegionsEnum.WORLD);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
     useEffect(() => {
@@ -33,9 +34,9 @@ const App: React.FC = () => {
     return (
         <div>
             {selectedRoomId ? (
-                <ChatRoom roomId={selectedRoomId} username={username} onLeaveRoom={() => setSelectedRoomId(null)} />
+                <ChatRoom roomId={selectedRoomId} username={username} region={selectedRegion} onLeaveRoom={() => setSelectedRoomId(null)} />
             ) : (
-                <ChatRooms username={username} onSelectRoom={setSelectedRoomId} onLogout={handleLogout}/>
+                <ChatRooms username={username} onSelectRoom={setSelectedRoomId} onLogout={handleLogout} setSelectedRegion={setSelectedRegion}/>
             )}
         </div>
     );
