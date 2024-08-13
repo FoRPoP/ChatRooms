@@ -108,7 +108,7 @@ namespace ChatService
             return result;
         }
 
-        public async Task<Chat?> JoinChatRoom(string chatRoomId, string username, string connectionId)
+        public async Task<Chat?> JoinChatRoom(string chatRoomId, string username, string connectionId, RegionsEnum region)
         {
             IReliableDictionary<string, Chat> _chatRooms = await StateManager.GetOrAddAsync<IReliableDictionary<string, Chat>>("chatRooms");
             ConditionalValue<Chat> chat;
@@ -118,9 +118,9 @@ namespace ChatService
                 chat = await _chatRooms.TryGetValueAsync(tx, chatRoomId);
                 if (chat.HasValue)
                 {
-                    IChatBroadcastService chatBroadcastService = GetChatBroadcastService(chat.Value.ChatData.Region.ToString());
+                    IChatBroadcastService chatBroadcastService = GetChatBroadcastService();
                     chat.Value.AddChatter(username);
-                    await chatBroadcastService.JoinChatRoom(connectionId, chatRoomId);
+                    await chatBroadcastService.JoinChatRoom(connectionId, chatRoomId+region.ToString());
                     await tx.CommitAsync();
                 }
                 else
@@ -151,7 +151,7 @@ namespace ChatService
             return true;
         }
 
-        public async Task<bool> LeaveChatRoom(string chatRoomId, string username, string connectionId)
+        public async Task<bool> LeaveChatRoom(string chatRoomId, string username, string connectionId, RegionsEnum region)
         {
             IReliableDictionary<string, Chat> _chatRooms = await StateManager.GetOrAddAsync<IReliableDictionary<string, Chat>>("chatRooms");
 
@@ -160,9 +160,9 @@ namespace ChatService
                 ConditionalValue<Chat> chat = await _chatRooms.TryGetValueAsync(tx, chatRoomId);
                 if (chat.HasValue)
                 {
-                    IChatBroadcastService chatBroadcastService = GetChatBroadcastService(chat.Value.ChatData.Region.ToString());
+                    IChatBroadcastService chatBroadcastService = GetChatBroadcastService();
                     chat.Value.RemoveChatter(username);
-                    await chatBroadcastService.LeaveChatRoom(connectionId, chatRoomId);
+                    await chatBroadcastService.LeaveChatRoom(connectionId, chatRoomId+region.ToString());
                     await tx.CommitAsync();
                 }
                 else
@@ -174,7 +174,7 @@ namespace ChatService
             return true;
         }
 
-        public async Task<bool> SendMessage(string chatRoomId, Message message)
+        public async Task<bool> SendMessage(string chatRoomId, Message message, RegionsEnum region)
         {
             IReliableDictionary<string, Chat> _chatRooms = await StateManager.GetOrAddAsync<IReliableDictionary<string, Chat>>("chatRooms");
             IReliableDictionary<string, UserInfo> _userInfos = await StateManager.GetOrAddAsync<IReliableDictionary<string, UserInfo>>("userInfos");
@@ -184,9 +184,9 @@ namespace ChatService
                 ConditionalValue<Chat> chat = await _chatRooms.TryGetValueAsync(tx, chatRoomId);
                 if (chat.HasValue)
                 {
-                    IChatBroadcastService chatBroadcastService = GetChatBroadcastService(chat.Value.ChatData.Region.ToString());
+                    IChatBroadcastService chatBroadcastService = GetChatBroadcastService();
                     chat.Value.AddMessage(message);
-                    await chatBroadcastService.SendMessage(chatRoomId, message);
+                    await chatBroadcastService.SendMessage(chatRoomId+region.ToString(), message);
 
                     UserInfo userInfo = await _userInfos.GetOrAddAsync(tx, message.Username, _ => new UserInfo());
                     userInfo.MessagesSent.Add(message);
@@ -224,9 +224,9 @@ namespace ChatService
             }
         }
 
-        private IChatBroadcastService GetChatBroadcastService(string partitionKeyName)
+        private IChatBroadcastService GetChatBroadcastService( )
         {
-            return _proxyFactory.CreateServiceProxy<IChatBroadcastService>(_chatBroadcastServiceUri, new ServicePartitionKey(partitionKeyName));
+            return _proxyFactory.CreateServiceProxy<IChatBroadcastService>(_chatBroadcastServiceUri);
         }
 
         /// <summary>

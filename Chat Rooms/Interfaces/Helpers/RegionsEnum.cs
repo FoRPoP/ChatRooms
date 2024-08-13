@@ -2,13 +2,10 @@
 {
     public enum RegionsEnum
     {
-        World,
-        NorthAmerica,
-        Europe,
-        Asia,
-        Africa,
-        AustraliaAndOceania,
-        SouthAmerica,
-        Antarctica
+        WORLD,
+        EMEA,
+        NA,
+        LATAM,
+        APAC
     }
 }

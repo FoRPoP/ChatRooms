@@ -13,13 +13,13 @@ namespace Interfaces
 
         Task<bool> CreateChatRoom(string username, string name, string description, RegionsEnum region);
 
-        Task<Chat?> JoinChatRoom(string chatRoomId, string username, string connectionId);
+        Task<Chat?> JoinChatRoom(string chatRoomId, string username, string connectionId, RegionsEnum region);
 
         Task<bool> FavouriteChatRoom(string chatRoomId, string username);
 
-        Task<bool> SendMessage(string chatRoomId, Message message);
+        Task<bool> SendMessage(string chatRoomId, Message message, RegionsEnum region);
 
-        Task<bool> LeaveChatRoom(string chatRoomId, string username, string connectionId);
+        Task<bool> LeaveChatRoom(string chatRoomId, string username, string connectionId, RegionsEnum region);
 
         Task<bool> DeleteChatRoom(string chatId);
     }

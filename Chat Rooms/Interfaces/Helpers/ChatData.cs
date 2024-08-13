@@ -17,7 +17,7 @@
             Name = string.Empty;
             Description = string.Empty;
             OwnerUsername = string.Empty;
-            Region = RegionsEnum.World;
+            Region = RegionsEnum.WORLD;
             DateTimeCreated = DateTime.Now;
             ActiveChatters = new();
             TotalMessages = 0;
