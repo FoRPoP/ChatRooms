@@ -49,7 +49,7 @@ export class BaseAPI {
     protected configuration: Configuration | undefined;
 
     constructor(configuration?: Configuration, protected basePath: string = BASE_PATH, protected axios: AxiosInstance = globalAxios) {
-        axios.defaults.baseURL = 'http://localhost:9090'
+        axios.defaults.baseURL = 'http://localhost:19081/Chat_Rooms/ChatRoomsWeb';
         if (configuration) {
             this.configuration = configuration;
             this.basePath = configuration.basePath || this.basePath;
