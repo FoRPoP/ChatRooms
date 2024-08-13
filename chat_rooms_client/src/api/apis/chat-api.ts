@@ -87,10 +87,11 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @param {string} [chatRoomId] 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatDeleteChatRoomDelete: async (chatRoomId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatDeleteChatRoomDelete: async (chatRoomId?: string, region?: RegionsEnum, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/Chat/DeleteChatRoom`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -114,6 +115,10 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
                 localVarQueryParameter['chatRoomId'] = chatRoomId;
             }
 
+            if (region !== undefined) {
+                localVarQueryParameter['region'] = region;
+            }
+
             const query = new URLSearchParams(localVarUrlObj.search);
             for (const key in localVarQueryParameter) {
                 query.set(key, localVarQueryParameter[key]);
@@ -133,10 +138,11 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @param {string} [chatRoomId] 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatFavouriteChatRoomPost: async (chatRoomId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatFavouriteChatRoomPost: async (chatRoomId?: string, region?: RegionsEnum, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/Chat/FavouriteChatRoom`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -160,6 +166,10 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
                 localVarQueryParameter['chatRoomId'] = chatRoomId;
             }
 
+            if (region !== undefined) {
+                localVarQueryParameter['region'] = region;
+            }
+
             const query = new URLSearchParams(localVarUrlObj.search);
             for (const key in localVarQueryParameter) {
                 query.set(key, localVarQueryParameter[key]);
@@ -179,10 +189,11 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
         /**
          * 
          * @param {string} [chatRoomId] 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatGetChatRoomGet: async (chatRoomId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatGetChatRoomGet: async (chatRoomId?: string, region?: RegionsEnum, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/Chat/GetChatRoom`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -206,6 +217,10 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
                 localVarQueryParameter['chatRoomId'] = chatRoomId;
             }
 
+            if (region !== undefined) {
+                localVarQueryParameter['region'] = region;
+            }
+
             const query = new URLSearchParams(localVarUrlObj.search);
             for (const key in localVarQueryParameter) {
                 query.set(key, localVarQueryParameter[key]);
@@ -224,10 +239,11 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatGetChatRoomsGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatGetChatRoomsGet: async (region?: RegionsEnum, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/Chat/GetChatRooms`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -247,6 +263,10 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
+            if (region !== undefined) {
+                localVarQueryParameter['region'] = region;
+            }
+
             const query = new URLSearchParams(localVarUrlObj.search);
             for (const key in localVarQueryParameter) {
                 query.set(key, localVarQueryParameter[key]);
@@ -265,10 +285,11 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatGetUserInfoGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatGetUserInfoGet: async (region?: RegionsEnum, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/Chat/GetUserInfo`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -286,6 +307,10 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
                     ? await configuration.apiKey("Authorization")
                     : await configuration.apiKey;
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            if (region !== undefined) {
+                localVarQueryParameter['region'] = region;
             }
 
             const query = new URLSearchParams(localVarUrlObj.search);
@@ -308,10 +333,11 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
          * 
          * @param {string} [chatRoomId] 
          * @param {string} [connectionId] 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatJoinChatRoomPost: async (chatRoomId?: string, connectionId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatJoinChatRoomPost: async (chatRoomId?: string, connectionId?: string, region?: RegionsEnum, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/Chat/JoinChatRoom`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -339,6 +365,10 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
                 localVarQueryParameter['connectionId'] = connectionId;
             }
 
+            if (region !== undefined) {
+                localVarQueryParameter['region'] = region;
+            }
+
             const query = new URLSearchParams(localVarUrlObj.search);
             for (const key in localVarQueryParameter) {
                 query.set(key, localVarQueryParameter[key]);
@@ -359,10 +389,11 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
          * 
          * @param {string} [chatRoomId] 
          * @param {string} [connectionId] 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatLeaveChatRoomPost: async (chatRoomId?: string, connectionId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatLeaveChatRoomPost: async (chatRoomId?: string, connectionId?: string, region?: RegionsEnum, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/Chat/LeaveChatRoom`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -390,6 +421,10 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
                 localVarQueryParameter['connectionId'] = connectionId;
             }
 
+            if (region !== undefined) {
+                localVarQueryParameter['region'] = region;
+            }
+
             const query = new URLSearchParams(localVarUrlObj.search);
             for (const key in localVarQueryParameter) {
                 query.set(key, localVarQueryParameter[key]);
@@ -410,10 +445,11 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
          * 
          * @param {Message} [body] 
          * @param {string} [chatRoomId] 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatSendMessagePost: async (body?: Message, chatRoomId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        chatSendMessagePost: async (body?: Message, chatRoomId?: string, region?: RegionsEnum, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/Chat/SendMessage`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -435,6 +471,10 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
 
             if (chatRoomId !== undefined) {
                 localVarQueryParameter['chatRoomId'] = chatRoomId;
+            }
+
+            if (region !== undefined) {
+                localVarQueryParameter['region'] = region;
             }
 
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -484,11 +524,12 @@ export const ChatApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} [chatRoomId] 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatDeleteChatRoomDelete(chatRoomId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<boolean>>> {
-            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatDeleteChatRoomDelete(chatRoomId, options);
+        async chatDeleteChatRoomDelete(chatRoomId?: string, region?: RegionsEnum, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<boolean>>> {
+            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatDeleteChatRoomDelete(chatRoomId, region, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -497,11 +538,12 @@ export const ChatApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} [chatRoomId] 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatFavouriteChatRoomPost(chatRoomId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<boolean>>> {
-            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatFavouriteChatRoomPost(chatRoomId, options);
+        async chatFavouriteChatRoomPost(chatRoomId?: string, region?: RegionsEnum, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<boolean>>> {
+            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatFavouriteChatRoomPost(chatRoomId, region, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -510,11 +552,12 @@ export const ChatApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} [chatRoomId] 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatGetChatRoomGet(chatRoomId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<ChatData>>> {
-            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatGetChatRoomGet(chatRoomId, options);
+        async chatGetChatRoomGet(chatRoomId?: string, region?: RegionsEnum, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<ChatData>>> {
+            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatGetChatRoomGet(chatRoomId, region, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -522,11 +565,12 @@ export const ChatApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatGetChatRoomsGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<{ [key: string]: ChatData; }>>> {
-            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatGetChatRoomsGet(options);
+        async chatGetChatRoomsGet(region?: RegionsEnum, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<{ [key: string]: ChatData; }>>> {
+            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatGetChatRoomsGet(region, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -534,25 +578,12 @@ export const ChatApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatGetUserInfoGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<UserInfo>>> {
-            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatGetUserInfoGet(options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * 
-         * @param {string} [chatRoomId] 
-         * @param {string} [connectionId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async chatJoinChatRoomPost(chatRoomId?: string, connectionId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<Chat>>> {
-            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatJoinChatRoomPost(chatRoomId, connectionId, options);
+        async chatGetUserInfoGet(region?: RegionsEnum, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<UserInfo>>> {
+            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatGetUserInfoGet(region, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -562,11 +593,27 @@ export const ChatApiFp = function(configuration?: Configuration) {
          * 
          * @param {string} [chatRoomId] 
          * @param {string} [connectionId] 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatLeaveChatRoomPost(chatRoomId?: string, connectionId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<boolean>>> {
-            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatLeaveChatRoomPost(chatRoomId, connectionId, options);
+        async chatJoinChatRoomPost(chatRoomId?: string, connectionId?: string, region?: RegionsEnum, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<Chat>>> {
+            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatJoinChatRoomPost(chatRoomId, connectionId, region, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         * 
+         * @param {string} [chatRoomId] 
+         * @param {string} [connectionId] 
+         * @param {RegionsEnum} [region] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async chatLeaveChatRoomPost(chatRoomId?: string, connectionId?: string, region?: RegionsEnum, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<boolean>>> {
+            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatLeaveChatRoomPost(chatRoomId, connectionId, region, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -576,11 +623,12 @@ export const ChatApiFp = function(configuration?: Configuration) {
          * 
          * @param {Message} [body] 
          * @param {string} [chatRoomId] 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatSendMessagePost(body?: Message, chatRoomId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<boolean>>> {
-            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatSendMessagePost(body, chatRoomId, options);
+        async chatSendMessagePost(body?: Message, chatRoomId?: string, region?: RegionsEnum, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<boolean>>> {
+            const localVarAxiosArgs = await ChatApiAxiosParamCreator(configuration).chatSendMessagePost(body, chatRoomId, region, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -609,75 +657,83 @@ export const ChatApiFactory = function (configuration?: Configuration, basePath?
         /**
          * 
          * @param {string} [chatRoomId] 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatDeleteChatRoomDelete(chatRoomId?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<boolean>> {
-            return ChatApiFp(configuration).chatDeleteChatRoomDelete(chatRoomId, options).then((request) => request(axios, basePath));
+        async chatDeleteChatRoomDelete(chatRoomId?: string, region?: RegionsEnum, options?: AxiosRequestConfig): Promise<AxiosResponse<boolean>> {
+            return ChatApiFp(configuration).chatDeleteChatRoomDelete(chatRoomId, region, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {string} [chatRoomId] 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatFavouriteChatRoomPost(chatRoomId?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<boolean>> {
-            return ChatApiFp(configuration).chatFavouriteChatRoomPost(chatRoomId, options).then((request) => request(axios, basePath));
+        async chatFavouriteChatRoomPost(chatRoomId?: string, region?: RegionsEnum, options?: AxiosRequestConfig): Promise<AxiosResponse<boolean>> {
+            return ChatApiFp(configuration).chatFavouriteChatRoomPost(chatRoomId, region, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {string} [chatRoomId] 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatGetChatRoomGet(chatRoomId?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<ChatData>> {
-            return ChatApiFp(configuration).chatGetChatRoomGet(chatRoomId, options).then((request) => request(axios, basePath));
+        async chatGetChatRoomGet(chatRoomId?: string, region?: RegionsEnum, options?: AxiosRequestConfig): Promise<AxiosResponse<ChatData>> {
+            return ChatApiFp(configuration).chatGetChatRoomGet(chatRoomId, region, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatGetChatRoomsGet(options?: AxiosRequestConfig): Promise<AxiosResponse<{ [key: string]: ChatData; }>> {
-            return ChatApiFp(configuration).chatGetChatRoomsGet(options).then((request) => request(axios, basePath));
+        async chatGetChatRoomsGet(region?: RegionsEnum, options?: AxiosRequestConfig): Promise<AxiosResponse<{ [key: string]: ChatData; }>> {
+            return ChatApiFp(configuration).chatGetChatRoomsGet(region, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatGetUserInfoGet(options?: AxiosRequestConfig): Promise<AxiosResponse<UserInfo>> {
-            return ChatApiFp(configuration).chatGetUserInfoGet(options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} [chatRoomId] 
-         * @param {string} [connectionId] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async chatJoinChatRoomPost(chatRoomId?: string, connectionId?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<Chat>> {
-            return ChatApiFp(configuration).chatJoinChatRoomPost(chatRoomId, connectionId, options).then((request) => request(axios, basePath));
+        async chatGetUserInfoGet(region?: RegionsEnum, options?: AxiosRequestConfig): Promise<AxiosResponse<UserInfo>> {
+            return ChatApiFp(configuration).chatGetUserInfoGet(region, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {string} [chatRoomId] 
          * @param {string} [connectionId] 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatLeaveChatRoomPost(chatRoomId?: string, connectionId?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<boolean>> {
-            return ChatApiFp(configuration).chatLeaveChatRoomPost(chatRoomId, connectionId, options).then((request) => request(axios, basePath));
+        async chatJoinChatRoomPost(chatRoomId?: string, connectionId?: string, region?: RegionsEnum, options?: AxiosRequestConfig): Promise<AxiosResponse<Chat>> {
+            return ChatApiFp(configuration).chatJoinChatRoomPost(chatRoomId, connectionId, region, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} [chatRoomId] 
+         * @param {string} [connectionId] 
+         * @param {RegionsEnum} [region] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async chatLeaveChatRoomPost(chatRoomId?: string, connectionId?: string, region?: RegionsEnum, options?: AxiosRequestConfig): Promise<AxiosResponse<boolean>> {
+            return ChatApiFp(configuration).chatLeaveChatRoomPost(chatRoomId, connectionId, region, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @param {Message} [body] 
          * @param {string} [chatRoomId] 
+         * @param {RegionsEnum} [region] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatSendMessagePost(body?: Message, chatRoomId?: string, options?: AxiosRequestConfig): Promise<AxiosResponse<boolean>> {
-            return ChatApiFp(configuration).chatSendMessagePost(body, chatRoomId, options).then((request) => request(axios, basePath));
+        async chatSendMessagePost(body?: Message, chatRoomId?: string, region?: RegionsEnum, options?: AxiosRequestConfig): Promise<AxiosResponse<boolean>> {
+            return ChatApiFp(configuration).chatSendMessagePost(body, chatRoomId, region, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -704,82 +760,90 @@ export class ChatApi extends BaseAPI {
     /**
      * 
      * @param {string} [chatRoomId] 
+     * @param {RegionsEnum} [region] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ChatApi
      */
-    public async chatDeleteChatRoomDelete(chatRoomId?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<boolean>> {
-        return ChatApiFp(this.configuration).chatDeleteChatRoomDelete(chatRoomId, options).then((request) => request(this.axios, this.basePath));
+    public async chatDeleteChatRoomDelete(chatRoomId?: string, region?: RegionsEnum, options?: AxiosRequestConfig) : Promise<AxiosResponse<boolean>> {
+        return ChatApiFp(this.configuration).chatDeleteChatRoomDelete(chatRoomId, region, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
      * @param {string} [chatRoomId] 
+     * @param {RegionsEnum} [region] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ChatApi
      */
-    public async chatFavouriteChatRoomPost(chatRoomId?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<boolean>> {
-        return ChatApiFp(this.configuration).chatFavouriteChatRoomPost(chatRoomId, options).then((request) => request(this.axios, this.basePath));
+    public async chatFavouriteChatRoomPost(chatRoomId?: string, region?: RegionsEnum, options?: AxiosRequestConfig) : Promise<AxiosResponse<boolean>> {
+        return ChatApiFp(this.configuration).chatFavouriteChatRoomPost(chatRoomId, region, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
      * @param {string} [chatRoomId] 
+     * @param {RegionsEnum} [region] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ChatApi
      */
-    public async chatGetChatRoomGet(chatRoomId?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<ChatData>> {
-        return ChatApiFp(this.configuration).chatGetChatRoomGet(chatRoomId, options).then((request) => request(this.axios, this.basePath));
+    public async chatGetChatRoomGet(chatRoomId?: string, region?: RegionsEnum, options?: AxiosRequestConfig) : Promise<AxiosResponse<ChatData>> {
+        return ChatApiFp(this.configuration).chatGetChatRoomGet(chatRoomId, region, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
+     * @param {RegionsEnum} [region] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ChatApi
      */
-    public async chatGetChatRoomsGet(options?: AxiosRequestConfig) : Promise<AxiosResponse<{ [key: string]: ChatData; }>> {
-        return ChatApiFp(this.configuration).chatGetChatRoomsGet(options).then((request) => request(this.axios, this.basePath));
+    public async chatGetChatRoomsGet(region?: RegionsEnum, options?: AxiosRequestConfig) : Promise<AxiosResponse<{ [key: string]: ChatData; }>> {
+        return ChatApiFp(this.configuration).chatGetChatRoomsGet(region, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
+     * @param {RegionsEnum} [region] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ChatApi
      */
-    public async chatGetUserInfoGet(options?: AxiosRequestConfig) : Promise<AxiosResponse<UserInfo>> {
-        return ChatApiFp(this.configuration).chatGetUserInfoGet(options).then((request) => request(this.axios, this.basePath));
-    }
-    /**
-     * 
-     * @param {string} [chatRoomId] 
-     * @param {string} [connectionId] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ChatApi
-     */
-    public async chatJoinChatRoomPost(chatRoomId?: string, connectionId?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<Chat>> {
-        return ChatApiFp(this.configuration).chatJoinChatRoomPost(chatRoomId, connectionId, options).then((request) => request(this.axios, this.basePath));
+    public async chatGetUserInfoGet(region?: RegionsEnum, options?: AxiosRequestConfig) : Promise<AxiosResponse<UserInfo>> {
+        return ChatApiFp(this.configuration).chatGetUserInfoGet(region, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
      * @param {string} [chatRoomId] 
      * @param {string} [connectionId] 
+     * @param {RegionsEnum} [region] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ChatApi
      */
-    public async chatLeaveChatRoomPost(chatRoomId?: string, connectionId?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<boolean>> {
-        return ChatApiFp(this.configuration).chatLeaveChatRoomPost(chatRoomId, connectionId, options).then((request) => request(this.axios, this.basePath));
+    public async chatJoinChatRoomPost(chatRoomId?: string, connectionId?: string, region?: RegionsEnum, options?: AxiosRequestConfig) : Promise<AxiosResponse<Chat>> {
+        return ChatApiFp(this.configuration).chatJoinChatRoomPost(chatRoomId, connectionId, region, options).then((request) => request(this.axios, this.basePath));
+    }
+    /**
+     * 
+     * @param {string} [chatRoomId] 
+     * @param {string} [connectionId] 
+     * @param {RegionsEnum} [region] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChatApi
+     */
+    public async chatLeaveChatRoomPost(chatRoomId?: string, connectionId?: string, region?: RegionsEnum, options?: AxiosRequestConfig) : Promise<AxiosResponse<boolean>> {
+        return ChatApiFp(this.configuration).chatLeaveChatRoomPost(chatRoomId, connectionId, region, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      * 
      * @param {Message} [body] 
      * @param {string} [chatRoomId] 
+     * @param {RegionsEnum} [region] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ChatApi
      */
-    public async chatSendMessagePost(body?: Message, chatRoomId?: string, options?: AxiosRequestConfig) : Promise<AxiosResponse<boolean>> {
-        return ChatApiFp(this.configuration).chatSendMessagePost(body, chatRoomId, options).then((request) => request(this.axios, this.basePath));
+    public async chatSendMessagePost(body?: Message, chatRoomId?: string, region?: RegionsEnum, options?: AxiosRequestConfig) : Promise<AxiosResponse<boolean>> {
+        return ChatApiFp(this.configuration).chatSendMessagePost(body, chatRoomId, region, options).then((request) => request(this.axios, this.basePath));
     }
 }
