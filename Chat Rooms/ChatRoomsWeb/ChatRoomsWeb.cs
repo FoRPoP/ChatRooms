@@ -134,7 +134,7 @@ namespace ChatRoomsWeb
 
         protected override async Task RunAsync(CancellationToken cancellationToken)
         {
-            await DefineMetricsAndPolicies();
+            await DefineDescription();
 
             while (true)
             {
@@ -150,13 +150,14 @@ namespace ChatRoomsWeb
             }
         }
 
-        private async Task DefineMetricsAndPolicies()
+        private async Task DefineDescription()
         {
             FabricClient fabricClient = new FabricClient();
             StatelessServiceUpdateDescription updateDescription = new();
 
             RegisterMetrics(updateDescription);
             RegisterScaling(updateDescription);
+            DefineAffinity(updateDescription);
 
             await fabricClient.ServiceManager.UpdateServiceAsync(Context.ServiceName, updateDescription);
         }
@@ -195,6 +196,16 @@ namespace ChatRoomsWeb
 
             updateDescription.ScalingPolicies ??= new List<ScalingPolicyDescription>();
             updateDescription.ScalingPolicies.Add(scalingPolicyDescription);
+        }
+
+        private void DefineAffinity(StatelessServiceUpdateDescription updateDescription)
+        {
+            ServiceCorrelationDescription serviceCorrelationDescription = new();
+            serviceCorrelationDescription.Scheme = ServiceCorrelationScheme.Affinity;
+            serviceCorrelationDescription.ServiceName = new Uri($"{Context.CodePackageActivationContext.ApplicationName}/AuthService");
+
+            updateDescription.Correlations ??= new List<ServiceCorrelationDescription>();
+            updateDescription.Correlations.Add(serviceCorrelationDescription);
         }
     }
 }

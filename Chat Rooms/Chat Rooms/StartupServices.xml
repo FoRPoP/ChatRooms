@@ -8,7 +8,7 @@
     <Parameter Name="ChatService_MinReplicaSetSize" DefaultValue="3" />
     <Parameter Name="ChatService_PartitionCount" DefaultValue="5" />
     <Parameter Name="ChatService_TargetReplicaSetSize" DefaultValue="3" />
-    <Parameter Name="ChatRoomsWeb_InstanceCount" DefaultValue="-1" />
+    <Parameter Name="ChatRoomsWeb_InstanceCount" DefaultValue="2" />
   </Parameters>
   <Services>
     <!-- The section below creates instances of service types, when an instance of this
@@ -19,9 +19,6 @@
     <Service Name="AuthService" ServicePackageActivationMode="ExclusiveProcess">
       <StatefulService ServiceTypeName="AuthServiceType" TargetReplicaSetSize="[AuthService_TargetReplicaSetSize]" MinReplicaSetSize="[AuthService_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[AuthService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
-        <ServiceCorrelations>
-          <ServiceCorrelation ServiceName="ChatRoomsWeb" Scheme="Affinity" />
-        </ServiceCorrelations>
       </StatefulService>
     </Service>
     <Service Name="ChatService" ServicePackageActivationMode="ExclusiveProcess">
