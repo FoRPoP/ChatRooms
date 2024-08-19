@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatService", "ChatService\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatBroadcastService", "ChatBroadcastService\ChatBroadcastService.csproj", "{5FA02317-E9FE-4121-BCE6-AFF9EAE6B320}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService", "AuthService\AuthService.csproj", "{08172A63-C9DB-42F8-A156-2934D62C2749}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "AuthService\AuthService.csproj", "{08172A63-C9DB-42F8-A156-2934D62C2749}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatSimulatorService", "ChatSimulatorService\ChatSimulatorService.csproj", "{63CD1614-B61D-454E-AB51-8D5A8B07FC72}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,14 @@ Global
 		{08172A63-C9DB-42F8-A156-2934D62C2749}.Release|Any CPU.Build.0 = Release|Any CPU
 		{08172A63-C9DB-42F8-A156-2934D62C2749}.Release|x64.ActiveCfg = Release|Any CPU
 		{08172A63-C9DB-42F8-A156-2934D62C2749}.Release|x64.Build.0 = Release|Any CPU
+		{63CD1614-B61D-454E-AB51-8D5A8B07FC72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63CD1614-B61D-454E-AB51-8D5A8B07FC72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63CD1614-B61D-454E-AB51-8D5A8B07FC72}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{63CD1614-B61D-454E-AB51-8D5A8B07FC72}.Debug|x64.Build.0 = Debug|Any CPU
+		{63CD1614-B61D-454E-AB51-8D5A8B07FC72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63CD1614-B61D-454E-AB51-8D5A8B07FC72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63CD1614-B61D-454E-AB51-8D5A8B07FC72}.Release|x64.ActiveCfg = Release|Any CPU
+		{63CD1614-B61D-454E-AB51-8D5A8B07FC72}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
