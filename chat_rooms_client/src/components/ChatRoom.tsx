@@ -44,7 +44,7 @@ const ChatRoom: React.FC<{ roomId: string, username: string, region: RegionsEnum
             const leaveRoom = async () => {
                 const connectionId = signalRService.getConnectionId();
                 if (connectionId) {
-                    chatApi.chatLeaveChatRoomPost(roomId, connectionId, chatData?.region)
+                    chatApi.chatLeaveChatRoomPost(roomId, connectionId, region)
                         .then(() => {
                             signalRService.leaveGroup(roomId);
                         });
