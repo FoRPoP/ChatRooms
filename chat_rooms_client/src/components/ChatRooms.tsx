@@ -29,7 +29,7 @@ const ChatRooms: React.FC<{ username: string, region: RegionsEnum, onSelectRoom:
         chatApi.chatGetUserInfoGet(region)
             .then(response => setUserInfo(response.data))
             .catch(error => { console.error('There was an error fetching user info!', error); });
-    }, [chatApi, region, setRegion]);
+    }, []);
 
     const handleCreateChatRoom = (roomName: string, roomDescription: string) => {
         chatApi.chatCreateChatRoomPost(roomName, roomDescription, region)
