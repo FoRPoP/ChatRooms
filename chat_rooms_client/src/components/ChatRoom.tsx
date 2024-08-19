@@ -66,7 +66,7 @@ const ChatRoom: React.FC<{ roomId: string, username: string, region: RegionsEnum
     const handleScroll = () => {
         if (chatContainerRef.current) {
             const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
-            setIsAtBottom(scrollTop + clientHeight >= scrollHeight - 10);
+            setIsAtBottom(scrollTop + clientHeight >= scrollHeight - 100);
         }
     };
 
@@ -82,7 +82,7 @@ const ChatRoom: React.FC<{ roomId: string, username: string, region: RegionsEnum
     const sendMessage = () => {
         if (newMessageText.trim()) {
             const message: Message = { chatRoomId: roomId, username: username, text: newMessageText };
-            chatApi.chatSendMessagePost(message, roomId, region)
+            chatApi.chatSendMessagePost(message, roomId=roomId, region=region)
                 .then(() => { setNewMessageText(''); })
                 .catch(error => { console.error('There was an error sending the message!', error); });
         }

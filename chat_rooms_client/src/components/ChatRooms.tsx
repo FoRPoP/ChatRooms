@@ -8,7 +8,7 @@ import axiosInstance from '../axiosConfig';
 import { UserInfo } from '../api/models/user-info';
 import { RegionsEnum } from '../api';
 
-const ChatRooms: React.FC<{ username: string, onSelectRoom: (roomId: string, roomName: string) => void, onLogout: () => void, setSelectedRegion: (region: RegionsEnum) => void}> = ({ username, onSelectRoom, onLogout, setSelectedRegion }) => {
+const ChatRooms: React.FC<{ username: string, region: RegionsEnum, onSelectRoom: (roomId: string, roomName: string) => void, onLogout: () => void, setRegion: (region: RegionsEnum) => void}> = ({ username, region, onSelectRoom, onLogout, setRegion }) => {
     const [chatRooms, setChatRooms] = useState<{ [key: string]: ChatData; }>({});
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [filterText, setFilterText] = useState<string>('');
@@ -20,13 +20,12 @@ const ChatRooms: React.FC<{ username: string, onSelectRoom: (roomId: string, roo
     const [filterFavourited, setFilterFavourited] = useState<boolean>(false);
     const [filterCreated, setFilterCreated] = useState<boolean>(false);
     const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
-    const [region, setRegion] = useState<RegionsEnum>(RegionsEnum.WORLD);
 
     const chatApi = new ChatApi(undefined, '', axiosInstance);
 
     useEffect(() => {
         refreshChatRooms(region);
-        setSelectedRegion(region);
+        setRegion(region);
         chatApi.chatGetUserInfoGet(region)
             .then(response => setUserInfo(response.data))
             .catch(error => { console.error('There was an error fetching user info!', error); });
@@ -107,7 +106,7 @@ const ChatRooms: React.FC<{ username: string, onSelectRoom: (roomId: string, roo
                 selectedKey={region}
                 onChange={(e, option) => {
                     setRegion(option?.key as RegionsEnum);
-                    setSelectedRegion(option?.key as RegionsEnum);
+                    setRegion(option?.key as RegionsEnum);
                     refreshChatRooms(option?.key as RegionsEnum);
                     chatApi.chatGetUserInfoGet(option?.key as RegionsEnum)
                 }}

@@ -36,7 +36,7 @@ const App: React.FC = () => {
             {selectedRoomId ? (
                 <ChatRoom roomId={selectedRoomId} username={username} region={selectedRegion} onLeaveRoom={() => setSelectedRoomId(null)} />
             ) : (
-                <ChatRooms username={username} onSelectRoom={setSelectedRoomId} onLogout={handleLogout} setSelectedRegion={setSelectedRegion}/>
+                <ChatRooms username={username} region={selectedRegion} onSelectRoom={setSelectedRoomId} onLogout={handleLogout} setRegion={setSelectedRegion}/>
             )}
         </div>
     );

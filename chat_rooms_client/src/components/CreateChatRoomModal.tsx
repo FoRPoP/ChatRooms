@@ -30,7 +30,6 @@ const regionOptions: IDropdownOption[] = Object.values(RegionsEnum).map(region =
 const CreateChatRoomModal: React.FC<ICreateChatRoomModalProps> = ({ isOpen, onClose, onCreate }) => {
     const [newRoomName, setNewRoomName] = useState('');
     const [newRoomDescription, setNewRoomDescription] = useState('');
-    const [selectedRegion, setSelectedRegion] = useState<IDropdownOption | undefined>(undefined);
 
     return (
         <Dialog
@@ -51,13 +50,6 @@ const CreateChatRoomModal: React.FC<ICreateChatRoomModalProps> = ({ isOpen, onCl
                 onChange={(e, value) => setNewRoomDescription(value!)}
                 multiline
                 rows={3}
-                required
-            />
-            <Dropdown
-                label="Select Region"
-                selectedKey={selectedRegion ? selectedRegion.key : undefined}
-                onChange={(e, option) => setSelectedRegion(option)}
-                options={regionOptions}
                 required
             />
             <DialogFooter>
