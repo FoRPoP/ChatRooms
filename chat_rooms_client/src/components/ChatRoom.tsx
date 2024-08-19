@@ -55,7 +55,7 @@ const ChatRoom: React.FC<{ roomId: string, username: string, region: RegionsEnum
 
             signalRService.getConnection()?.off('ReceiveMessage', handleReceiveMessage);
         };
-    }, [roomId, username]);
+    }, [roomId, username, chatData?.region, onLeaveRoom, region]);
 
     useEffect(() => {
         if (isAtBottom) {
@@ -82,7 +82,7 @@ const ChatRoom: React.FC<{ roomId: string, username: string, region: RegionsEnum
     const sendMessage = () => {
         if (newMessageText.trim()) {
             const message: Message = { chatRoomId: roomId, username: username, text: newMessageText };
-            chatApi.chatSendMessagePost(message, roomId=roomId, region=region)
+            chatApi.chatSendMessagePost(message, roomId, region)
                 .then(() => { setNewMessageText(''); })
                 .catch(error => { console.error('There was an error sending the message!', error); });
         }
