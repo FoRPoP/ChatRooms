@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import { Dialog, DialogType, DialogFooter, PrimaryButton, DefaultButton, TextField, Dropdown, IDropdownOption } from '@fluentui/react';
-import { ChatApi } from '../api/apis/chat-api';
-import axiosInstance from '../axiosConfig';
-import { RegionsEnum } from '../api';
+import { Dialog, DialogType, DialogFooter, PrimaryButton, DefaultButton, TextField } from '@fluentui/react';
 
 interface ICreateChatRoomModalProps {
     isOpen: boolean;
@@ -21,11 +18,6 @@ const modalPropsStyles = { main: { maxWidth: 450 } };
     isBlocking: true,
     styles: modalPropsStyles,
 };
-
-const regionOptions: IDropdownOption[] = Object.values(RegionsEnum).map(region => ({
-    key: region,
-    text: region,
-}));
 
 const CreateChatRoomModal: React.FC<ICreateChatRoomModalProps> = ({ isOpen, onClose, onCreate }) => {
     const [newRoomName, setNewRoomName] = useState('');
